@@ -12,6 +12,10 @@ Tds.Views.Tds = Backbone.View.extend({
         var html = this.template();
         this.$el.html(html);
 
+        if(this.getIsEditView()){
+            this.$el.append('Editing TDS with id ' + this.getTdsId());
+        }
+
         return this;
     },
 

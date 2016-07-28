@@ -1,8 +1,8 @@
 Tds.Router = Backbone.Router.extend({
 
     routes: {
-        ''              : 'tdsList',
-        'dashboard'     : 'tdsList',
+        ''              : 'dashboard',
+        'dashboard'     : 'dashboard',
 
         'tdsList'       : 'tdsList',
         'tdsCreate'     : 'tdsCreate',

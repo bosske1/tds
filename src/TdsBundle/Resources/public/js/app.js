@@ -8,10 +8,6 @@ window.Tds = {
     start: function(data) {
         var router = new Tds.Router();
 
-        router.dashboard();
+        Backbone.history.start();
     }
 };
-
-$(document).ready(function(){
-    Tds.start();
-});
