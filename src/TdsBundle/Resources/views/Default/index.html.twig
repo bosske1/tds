@@ -23,6 +23,11 @@
     {% endjavascripts %}
 
     {# bootstrap app here, yeah lame... #}
-    <script>Tds.start();</script>
+    <script>
+        $.fn.size = function(){
+          return this.length;
+        };
+        Tds.start();
+    </script>
 
 {% endblock %}

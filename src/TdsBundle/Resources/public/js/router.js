@@ -17,8 +17,6 @@ Tds.Router = Backbone.Router.extend({
         var dashboardView = new Tds.Views.Dashboard();
 
         $('#main-container').html(dashboardView.render().$el);
-
-        dashboardView.afterRender();
     },
 
     tdsList : function(){
@@ -31,6 +29,8 @@ Tds.Router = Backbone.Router.extend({
         var tdsView = new Tds.Views.Tds();
 
         $('#main-container').html(tdsView.render().$el);
+
+        tdsView.afterRender();
     },
 
     tdsEdit   : function(id){

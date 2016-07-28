@@ -19,6 +19,15 @@ Tds.Views.Tds = Backbone.View.extend({
         return this;
     },
 
+    afterRender: function(){
+        var options = {
+            cellHeight: 80,
+            verticalMargin: 10
+        };
+
+        $('.grid-stack').gridstack(options);
+    },
+
     setTdsId : function(tdsId){
         this.tdsId = tdsId;
     },
