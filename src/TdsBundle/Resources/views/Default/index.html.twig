@@ -2,6 +2,25 @@
 
 {% block body %}
 
+    <div id="main-container"></div>
+
     Hello World!
+
+    {% block javascripts %}
+        {{ parent() }}
+    {% endblock %}
+
+    {% javascripts
+        '@TdsBundle/Resources/public/js/app.js'
+        '@TdsBundle/Resources/public/js/router.js'
+        '@TdsBundle/Resources/public/js/views/Dashboard.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/template" id="tpl-dashboard">
+        <h2 class="page-header text-center">Dashboard</h2>
+    </script>
+
 
 {% endblock %}

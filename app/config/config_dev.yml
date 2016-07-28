@@ -32,3 +32,9 @@ monolog:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
