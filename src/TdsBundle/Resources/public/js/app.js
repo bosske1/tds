@@ -4,6 +4,7 @@ window.Tds = {
     Views       : {},
     Services    : {},
     Helpers     : {},
+    Parsers     : {},
 
     start: function(data) {
         var router = new Tds.Router();

@@ -5,6 +5,10 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap/bootstrap.min.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery/jquery-ui.min.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery/jquery-ui.structure.min.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery/jquery-ui.theme.min.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/gridstack/gridstack.min.css') }}">
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -12,9 +16,11 @@
         {% block body %}{% endblock %}
         {% block javascripts %}
             <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery-3.1.0.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery-ui.min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('assets/js/underscore/underscore-min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('assets/js/bootstrap/bootstrap.min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('assets/js/backbone/backbone-min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/gridstack/gridstack.min.js') }}"></script>
         {% endblock %}
     </body>
 </html>

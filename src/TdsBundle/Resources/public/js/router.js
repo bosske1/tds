@@ -17,6 +17,8 @@ Tds.Router = Backbone.Router.extend({
         var dashboardView = new Tds.Views.Dashboard();
 
         $('#main-container').html(dashboardView.render().$el);
+
+        dashboardView.afterRender();
     },
 
     tdsList : function(){
