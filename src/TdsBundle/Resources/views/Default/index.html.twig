@@ -5,6 +5,8 @@
     <div id="main-container"></div>
 
     {% include 'TdsBundle:Default:dashboard.html.twig' %}
+    {% include 'TdsBundle:Default:tds/tds.html.twig' %}
+    {% include 'TdsBundle:Default:tds/tdsList.html.twig' %}
 
     {% block javascripts %}
         {{ parent() }}
@@ -14,6 +16,8 @@
         '@TdsBundle/Resources/public/js/app.js'
         '@TdsBundle/Resources/public/js/router.js'
         '@TdsBundle/Resources/public/js/views/Dashboard.js'
+        '@TdsBundle/Resources/public/js/views/tds/Tds.js'
+        '@TdsBundle/Resources/public/js/views/tds/TdsList.js'
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
