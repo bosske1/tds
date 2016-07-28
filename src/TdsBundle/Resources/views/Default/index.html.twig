@@ -4,7 +4,7 @@
 
     <div id="main-container"></div>
 
-    Hello World!
+    {% include 'TdsBundle:Default:dashboard.html.twig' %}
 
     {% block javascripts %}
         {{ parent() }}
@@ -17,10 +17,5 @@
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
-
-    <script type="text/template" id="tpl-dashboard">
-        <h2 class="page-header text-center">Dashboard</h2>
-    </script>
-
 
 {% endblock %}
