@@ -4,10 +4,6 @@ Tds.Views.Tds = Backbone.View.extend({
 
     tdsId : null,
 
-    events: {
-        'click #save-button': 'saveTemplate'
-    },
-
     initialize: function() {
         this.template= _.template($('#tpl-tds').html());
     },
@@ -24,23 +20,12 @@ Tds.Views.Tds = Backbone.View.extend({
     },
 
     afterRender: function(){
-        $.fn.size = function(){
-            return this.length;
-        };
         var options = {
             cellHeight: 80,
             verticalMargin: 10
         };
 
-        this.getGridStackContainer().gridstack(options);
-    },
-
-    saveTemplate : function(){
-        Tds.getParser('TdsHtmlToJson').setContainer(this.getGridStackContainer()).parse()
-    },
-
-    loadTemplate : function(){
-        Tds.getParser('TdsJsonToHtml').setContainer(this.getGridStackContainer()).parse()
+        $('.grid-stack').gridstack(options);
     },
 
     setTdsId : function(tdsId){
@@ -59,10 +44,6 @@ Tds.Views.Tds = Backbone.View.extend({
 
     getIsEditView : function(){
         return this.isEditView;
-    },
-
-    getGridStackContainer : function(){
-        return $('.grid-stack')
     }
 
 });

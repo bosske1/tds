@@ -4,9 +4,9 @@ Tds.Router = Backbone.Router.extend({
         ''              : 'dashboard',
         'dashboard'     : 'dashboard',
 
-        'tds/list'       : 'tdsList',
-        'tds/create'     : 'tdsCreate',
-        'tds/edit/:id'   : 'tdsEdit'
+        'tdsList'       : 'tdsList',
+        'tdsCreate'     : 'tdsCreate',
+        'tdsEdit/:id'   : 'tdsEdit'
     },
 
     initialize: function() {
