@@ -56,7 +56,7 @@ class TdsController extends Controller
      */
     public function generateAction($id)
     {
-        $html = $this->renderView('TdsBundle:Default:login.html.twig');
+        $html = $this->renderView('TdsBundle:Tds:login.html.twig');
 
         return new \Symfony\Component\HttpFoundation\Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),

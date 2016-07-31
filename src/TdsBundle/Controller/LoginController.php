@@ -12,6 +12,6 @@ class LoginController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('TdsBundle:Default:login.html.twig');
+        return $this->render('TdsBundle:Tds:login.html.twig');
     }
 }
