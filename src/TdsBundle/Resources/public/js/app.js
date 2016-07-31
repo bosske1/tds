@@ -35,5 +35,15 @@ window.Tds = {
         if (typeof view.afterRender != "undefined") {
             view.afterRender();
         }
+
+        this.fixContainerLayout();
+    },
+
+    fixContainerLayout : function () {
+        var navBarHeight = $('.side-nav').height();
+
+        this.getContainer().css({
+            height : navBarHeight - 20
+        })
     }
 };
