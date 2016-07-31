@@ -31,9 +31,21 @@ Tds.Views.Tds = Backbone.View.extend({
     },
 
     saveTemplate : function(){
-        var parsedData = Tds.getParser('TdsHtmlToJson').setContainer(this.getGridStackContainer()).parse();
+        var me = this,
+            parsedData = Tds.getParser('TdsHtmlToJson').setContainer(this.getGridStackContainer()).parse();
 
-        console.log(parsedData);
+        this.getModel().set('data', parsedData);
+        this.getModel().save({
+            success: function (model, response, options) {
+
+                //do something...
+            },
+            error: function (collection, response, options) {
+
+                //create error handler...
+            }
+        },
+        {url: me.getSaveUrl()});
     },
 
     loadTemplate : function(){
@@ -44,6 +56,14 @@ Tds.Views.Tds = Backbone.View.extend({
         this.getGridStackContainer().gridstack({});
 
         Tds.getParser('TdsJsonToHtml').setContainer(this.getGridStackContainer()).parse(dataToParse);
+    },
+
+    getSaveUrl : function () {
+        if(this.getIsEditView() && this.getTdsId() != null){
+            return '/tds/update/' + this.getTdsId();
+        } else {
+            return '/tds/create'
+        }
     },
 
     setTdsId : function(tdsId){

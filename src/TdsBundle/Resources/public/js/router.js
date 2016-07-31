@@ -26,11 +26,12 @@ Tds.Router = Backbone.Router.extend({
     },
 
     tdsCreate : function(){
-        var tdsView = new Tds.Views.Tds();
+        var tdsView = new Tds.Views.Tds(),
+            tdsModel = new Tds.Models.Tds();
 
-        $('#main-container').html(tdsView.render().$el);
+        tdsView.setModel(tdsModel);
 
-        tdsView.afterRender();
+        Tds.renderView(tdsView);
     },
 
     tdsEdit   : function(id){

@@ -16,7 +16,17 @@ class TdsController extends Controller
      */
     public function createAction(Request $request)
     {
-        echo json_encode($request);die();
+        var_dump(json_decode($request->getContent()));die();
+    }
+
+    /**
+     * Matches /tds/update/*
+     *
+     * @Route("/tds/update/{id}", name="tds_update")
+     */
+    public function updateAction(Request $request)
+    {
+        var_dump(json_decode($request->getContent()));die();
     }
 
     /**
