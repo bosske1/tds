@@ -34,12 +34,25 @@ Tds.Router = Backbone.Router.extend({
     },
 
     tdsEdit   : function(id){
-        var tdsView = new Tds.Views.Tds();
+        var tdsView  = new Tds.Views.Tds(),
+            tdsModel = new Tds.Models.Tds();
 
-        tdsView.setIsEditView(true)
-               .setTdsId(id);
+        tdsModel.fetch({
+            url: '/tds/get/' + id,
+            success: function (model, response, options) {
+                tdsView.setIsEditView(true)
+                       .setModel(model)
+                       .setTdsId(id);
 
-        $('#main-container').html(tdsView.render().$el);
+                $('#main-container').html(tdsView.render().$el);
+
+                tdsView.afterRender();
+            },
+            error: function (collection, response, options) {
+
+                //create error handler...
+            }
+        });
     }
 
 

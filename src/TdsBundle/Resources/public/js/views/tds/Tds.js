@@ -4,6 +4,8 @@ Tds.Views.Tds = Backbone.View.extend({
 
     tdsId : null,
 
+    model : null,
+
     events: {
         'click #save-button': 'saveTemplate',
         'click #load-button': 'loadTemplate'
@@ -25,15 +27,7 @@ Tds.Views.Tds = Backbone.View.extend({
     },
 
     afterRender: function(){
-        $.fn.size = function(){
-            return this.length;
-        };
-        var options = {
-            cellHeight: 80,
-            verticalMargin: 10
-        };
-
-        this.getGridStackContainer().gridstack(options);
+        this.loadTemplate();
     },
 
     saveTemplate : function(){
@@ -45,18 +39,9 @@ Tds.Views.Tds = Backbone.View.extend({
     loadTemplate : function(){
         Tds.getParser('TdsJsonToHtml').prepareGridStack();
 
-        this.getGridStackContainer().gridstack({});
+        var dataToParse = this.getModel().get('data');
 
-        var dataToParse = [
-            {x: 0, y: 0, width: 2, height: 2},
-            {x: 3, y: 1, width: 1, height: 2},
-            {x: 4, y: 1, width: 1, height: 1},
-            {x: 2, y: 3, width: 3, height: 1},
-            {x: 1, y: 4, width: 1, height: 1},
-            {x: 1, y: 3, width: 1, height: 1},
-            {x: 2, y: 4, width: 1, height: 1},
-            {x: 2, y: 5, width: 1, height: 1}
-        ];
+        this.getGridStackContainer().gridstack({});
 
         Tds.getParser('TdsJsonToHtml').setContainer(this.getGridStackContainer()).parse(dataToParse);
     },
@@ -67,6 +52,16 @@ Tds.Views.Tds = Backbone.View.extend({
 
     getTdsId : function(){
         return this.tdsId;
+    },
+
+    setModel : function(model){
+        this.model = model;
+
+        return this;
+    },
+
+    getModel : function(){
+        return this.model;
     },
 
     setIsEditView : function(isEditView){
