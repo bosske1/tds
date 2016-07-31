@@ -54,8 +54,9 @@ class TdsController extends Controller
      *
      * @Route("/tds/generate/{id}", name="tds_generate")
      */
-    public function generateAction($id)
+    public function generateAction($id, Request $request)
     {
+        var_dump(json_decode($request->getContent()));die();
         $html = $this->renderView('TdsBundle:Default:login.html.twig');
 
         return new \Symfony\Component\HttpFoundation\Response(

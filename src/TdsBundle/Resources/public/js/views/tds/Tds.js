@@ -7,7 +7,8 @@ Tds.Views.Tds = Backbone.View.extend({
     model : null,
 
     events: {
-        'click #save-button': 'saveTemplate',
+        'click #save-button'    : 'saveTemplate',
+        'click #generate-button': 'generateTemplate',
         'dblclick .grid-stack-item-content' : 'showEditorModal'
     },
 
@@ -48,6 +49,24 @@ Tds.Views.Tds = Backbone.View.extend({
         {url: me.getSaveUrl()});
     },
 
+    generateTemplate :function () {
+        var me = this,
+            html = $('.grid-stack').html();
+
+        this.getModel().set('html', html);
+        this.getModel().save({
+                success: function (model, response, options) {
+
+                    //do something...
+                },
+                error: function (collection, response, options) {
+
+                    //create error handler...
+                }
+            },
+            {url: me.getGenerateUrl()});
+    },
+
     loadTemplate : function(){
         Tds.getParser('TdsJsonToHtml').prepareGridStack();
 
@@ -63,6 +82,14 @@ Tds.Views.Tds = Backbone.View.extend({
             return '/tds/update/' + this.getTdsId();
         } else {
             return '/tds/create'
+        }
+    },
+
+    getGenerateUrl : function () {
+        if(this.getIsEditView() && this.getTdsId() != null){
+            return '/tds/generate/' + this.getTdsId();
+        } else {
+            return '/tds/generate/new'
         }
     },
 

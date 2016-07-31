@@ -7,7 +7,8 @@ Tds.Models.Tds = Backbone.Model.extend({
         created_by  :   null,
         td_created  :   null,
         name	    :   null,
-        data        :   []
+        data        :   [],
+        html        :   ''
     },
 
     initialize: function() {
