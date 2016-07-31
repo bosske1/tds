@@ -3,6 +3,7 @@ Tds.Router = Backbone.Router.extend({
     routes: {
         ''              : 'dashboard',
         'dashboard'     : 'dashboard',
+        'administration' : 'administration',
 
         'tds/list'       : 'tdsList',
         'tds/create'     : 'tdsCreate',
@@ -53,8 +54,12 @@ Tds.Router = Backbone.Router.extend({
                 //create error handler...
             }
         });
+    },
+
+    administration : function() {
+        var administrationView = new Tds.Views.Administration();
+
+        $('#main-container').html(administrationView.render().$el);
     }
-
-
 
 });
