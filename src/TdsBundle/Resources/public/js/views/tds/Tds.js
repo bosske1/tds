@@ -51,9 +51,9 @@ Tds.Views.Tds = Backbone.View.extend({
 
     generateTemplate :function () {
         var me = this,
-            html = $('.grid-stack').html();
+            parsedData = Tds.getParser('TdsHtmlToJson').setContainer(this.getGridStackContainer()).parse();
 
-        this.getModel().set('html', html);
+        this.getModel().set('data', parsedData);
         this.getModel().save({
                 success: function (model, response, options) {
 
@@ -81,16 +81,12 @@ Tds.Views.Tds = Backbone.View.extend({
         if(this.getIsEditView() && this.getTdsId() != null){
             return '/tds/update/' + this.getTdsId();
         } else {
-            return '/tds/create'
+            return '/tds/create';
         }
     },
 
     getGenerateUrl : function () {
-        if(this.getIsEditView() && this.getTdsId() != null){
-            return '/tds/generate/' + this.getTdsId();
-        } else {
-            return '/tds/generate/new'
-        }
+        return '/tds/generate';
     },
 
     showEditorModal : function (e) {

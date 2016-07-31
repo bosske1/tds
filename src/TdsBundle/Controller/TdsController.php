@@ -50,22 +50,35 @@ class TdsController extends Controller
     }
 
     /**
-     * Matches /tds/generate/*
+     * Matches /tds/generate
      *
-     * @Route("/tds/generate/{id}", name="tds_generate")
+     * @Route("/tds/generate", name="tds_generate")
      */
-    public function generateAction($id, Request $request)
+    public function generateAction(Request $request)
     {
-        var_dump(json_decode($request->getContent()));die();
-        $html = $this->renderView('TdsBundle:Default:login.html.twig');
+        //based on serialization data create html container and render it to pdf file... for now just login as test
+        $html = $this->renderView('TdsBundle:Tds:login.html.twig');
 
-        return new \Symfony\Component\HttpFoundation\Response(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-            200,
-            array(
-                'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'attachment; filename="file.pdf"'
-            )
+        $fileName = $this->generateFileName($html);
+
+        if($fileName){
+            return new JsonResponse(
+                array(
+                    'file_name' => $fileName
+                )
+            );
+        }
+    }
+
+    protected function generateFileName($html)
+    {
+        $fileName = 'test.pdf';
+
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+            $html,
+            $this->get('kernel')->getPdfDir() . '/' . $fileName
         );
+
+        return $fileName;
     }
 }
