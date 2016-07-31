@@ -7,7 +7,8 @@ Tds.Views.Tds = Backbone.View.extend({
     model : null,
 
     events: {
-        'click #save-button': 'saveTemplate'
+        'click #save-button': 'saveTemplate',
+        'dblclick .grid-stack-item-content' : 'showEditorModal'
     },
 
     initialize: function() {
@@ -63,6 +64,29 @@ Tds.Views.Tds = Backbone.View.extend({
         } else {
             return '/tds/create'
         }
+    },
+
+    showEditorModal : function (e) {
+        $('#editor-modal').modal('show');
+
+        this.onEditorSave(e);
+        this.showEditor();
+    },
+
+    onEditorSave : function (e) {
+        $( "#editor-modal-button-save" ).on( "click", function() {
+            var editorHtml = tinymce.activeEditor.getContent();
+
+            $(e.currentTarget).html(editorHtml);
+
+            $('#editor-modal').modal('hide');
+        });
+    },
+
+    showEditor : function () {
+        tinymce.init({
+            selector: '#editor-modal-body'
+        });
     },
 
     setTdsId : function(tdsId){

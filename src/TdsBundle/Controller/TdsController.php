@@ -4,6 +4,7 @@ namespace TdsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -55,7 +56,15 @@ class TdsController extends Controller
      */
     public function generateAction($id)
     {
+        $html = $this->renderView('TdsBundle:Default:login.html.twig');
 
-        $this->get('knp_snappy.image')->generate('http://www.google.fr', $this->get('kernel')->getPdfDir() . '/image.jpg');
+        return new \Symfony\Component\HttpFoundation\Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="file.pdf"'
+            )
+        );
     }
 }
