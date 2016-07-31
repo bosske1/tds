@@ -2,14 +2,18 @@
 
 {% block body %}
 
-    <div id="main-container"></div>
+    <div id="container-fluid">
 
     {% include 'TdsBundle:Default:dashboard.html.twig' %}
     {% include 'TdsBundle:Default:tds/tds.html.twig' %}
     {% include 'TdsBundle:Default:tds/tdsList.html.twig' %}
 
     {% block javascripts %}
-        {{ parent() }}
+        <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery-3.1.0.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/underscore/underscore-min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/bootstrap/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/backbone/backbone-min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/gridstack/gridstack.min.js') }}"></script>
     {% endblock %}
 
     {% javascripts
@@ -33,5 +37,5 @@
         };
         Tds.start();
     </script>
-
+    </div>
 {% endblock %}
