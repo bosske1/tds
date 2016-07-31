@@ -22,5 +22,18 @@ window.Tds = {
         var router = new Tds.Router();
 
         Backbone.history.start();
+    },
+
+    getContainer : function(){
+        return $('#main-container');
+    },
+
+    //probably not perfect place for this... for now it's ok...
+    renderView : function(view){
+        Tds.getContainer().html(view.render().$el);
+
+        if (typeof view.afterRender != "undefined") {
+            view.afterRender();
+        }
     }
 };

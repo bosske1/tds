@@ -34,19 +34,18 @@ Tds.Router = Backbone.Router.extend({
     },
 
     tdsEdit   : function(id){
-        var tdsView  = new Tds.Views.Tds(),
+        var me = this,
+            tdsView  = new Tds.Views.Tds(),
             tdsModel = new Tds.Models.Tds();
 
         tdsModel.fetch({
-            url: '/tds/get/' + id,
+            url: '/tds/read/' + id,
             success: function (model, response, options) {
                 tdsView.setIsEditView(true)
                        .setModel(model)
                        .setTdsId(id);
 
-                $('#main-container').html(tdsView.render().$el);
-
-                tdsView.afterRender();
+                Tds.renderView(tdsView);
             },
             error: function (collection, response, options) {
 

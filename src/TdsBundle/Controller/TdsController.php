@@ -5,15 +5,26 @@ namespace TdsBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class TdsController extends Controller
 {
     /**
-     * Matches /tds/get/*
+     * Matches /tds/create
      *
-     * @Route("/tds/get/{id}", name="tds_get")
+     * @Route("/tds/create", name="tds_create")
      */
-    public function getAction($id)
+    public function createAction(Request $request)
+    {
+        echo json_encode($request);die();
+    }
+
+    /**
+     * Matches /tds/read/*
+     *
+     * @Route("/tds/read/{id}", name="tds_get")
+     */
+    public function readAction($id)
     {
 
         return new JsonResponse(array(
