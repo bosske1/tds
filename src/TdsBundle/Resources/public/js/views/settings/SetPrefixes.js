@@ -1,7 +1,7 @@
-Tds.Views.Administration = Backbone.View.extend({
+Tds.Views.SetPrefixes = Backbone.View.extend({
 
     initialize: function() {
-        this.template= _.template($('#tpl-administration').html());
+        this.template= _.template($('#tpl-set-prefixes').html());
     },
 
     render: function() {

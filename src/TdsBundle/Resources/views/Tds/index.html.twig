@@ -12,7 +12,14 @@
                 <div id="main-container"></div>
 
                 {% include 'TdsBundle:Tds:dashboard.html.twig' %}
-                {% include 'TdsBundle:Tds:administration.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/settings/setLabels.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/settings/setLang.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/settings/setPrefixes.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/settings/setSegments.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/settings/setTrademarks.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/settings/setUnits.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/templates.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/translate.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/tds.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/tdsList.html.twig' %}
 
@@ -30,7 +37,14 @@
                     '@TdsBundle/Resources/public/js/app.js'
                     '@TdsBundle/Resources/public/js/router.js'
                     '@TdsBundle/Resources/public/js/views/Dashboard.js'
-                    '@TdsBundle/Resources/public/js/views/Administration.js'
+                    '@TdsBundle/Resources/public/js/views/settings/SetSegments.js'
+                    '@TdsBundle/Resources/public/js/views/settings/SetTrademarks.js'
+                    '@TdsBundle/Resources/public/js/views/settings/SetPrefixes.js'
+                    '@TdsBundle/Resources/public/js/views/settings/SetLang.js'
+                    '@TdsBundle/Resources/public/js/views/settings/SetLabels.js'
+                    '@TdsBundle/Resources/public/js/views/settings/SetUnits.js'
+                    '@TdsBundle/Resources/public/js/views/Templates.js'
+                    '@TdsBundle/Resources/public/js/views/Translate.js'
                     '@TdsBundle/Resources/public/js/views/tds/Tds.js'
                     '@TdsBundle/Resources/public/js/views/tds/TdsList.js'
                     '@TdsBundle/Resources/public/js/models/Tds.js'

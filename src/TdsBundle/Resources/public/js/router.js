@@ -3,7 +3,16 @@ Tds.Router = Backbone.Router.extend({
     routes: {
         ''              : 'dashboard',
         'dashboard'     : 'dashboard',
-        'administration' : 'administration',
+
+        'settings/segments'     : 'setSegments',
+        'settings/trademarks'   : 'setTrademarks',
+        'settings/prefixes'     : 'setPrefixes',
+        'settings/lang'         : 'setLang',
+        'settings/labels'       : 'setLabels',
+        'settings/units'        : 'setUnits',
+
+        'templates'     : 'templates',
+        'translate'     : 'translate',
 
         'tds/list'       : 'tdsList',
         'tds/create'     : 'tdsCreate',
@@ -56,10 +65,51 @@ Tds.Router = Backbone.Router.extend({
         });
     },
 
-    administration : function() {
-        var administrationView = new Tds.Views.Administration();
+    setSegments : function() {
+        var setSegmentsView = new Tds.Views.SetSegments();
 
-        $('#main-container').html(administrationView.render().$el);
+        $('#main-container').html(setSegmentsView.render().$el);
+    },
+
+    setTrademarks : function() {
+        var setTrademarksView = new Tds.Views.SetTrademarks();
+
+        $('#main-container').html(setTrademarksView.render().$el);
+    },
+
+    setPrefixes : function() {
+        var setPrefixesView = new Tds.Views.SetPrefixes();
+
+        $('#main-container').html(setPrefixesView.render().$el);
+    },
+
+    setLang : function() {
+        var setLangView = new Tds.Views.SetLang();
+
+        $('#main-container').html(setLangView.render().$el);
+    },
+
+    setLabels: function() {
+        var setLabelsView = new Tds.Views.SetLabels();
+
+        $('#main-container').html(setLabelsView.render().$el);
+    },
+
+    setUnits : function() {
+        var setUnitsView = new Tds.Views.SetUnits();
+
+        $('#main-container').html(setUnitsView.render().$el);
+    },
+
+    templates : function() {
+        var templatesView = new Tds.Views.Templates();
+
+        $('#main-container').html(templatesView.render().$el);
+    },
+
+    translate : function() {
+        var translateView = new Tds.Views.Translate();
+
+        $('#main-container').html(translateView.render().$el);
     }
-
 });
