@@ -47,4 +47,14 @@ class TdsController extends Controller
             )
         ));
     }
+
+    /**
+     * Matches /tds/generate/*
+     *
+     * @Route("/tds/generate/{id}", name="tds_generate")
+     */
+    public function generateAction($id)
+    {
+        $this->get('knp_snappy.image')->generate('http://www.google.fr', '/web/test.jpg');
+    }
 }
