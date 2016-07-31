@@ -7,8 +7,7 @@ Tds.Views.Tds = Backbone.View.extend({
     model : null,
 
     events: {
-        'click #save-button': 'saveTemplate',
-        'click #load-button': 'loadTemplate'
+        'click #save-button': 'saveTemplate'
     },
 
     initialize: function() {

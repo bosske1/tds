@@ -55,6 +55,7 @@ class TdsController extends Controller
      */
     public function generateAction($id)
     {
-        $this->get('knp_snappy.image')->generate('http://www.google.fr', '/web/test.jpg');
+
+        $this->get('knp_snappy.image')->generate('http://www.google.fr', $this->get('kernel')->getPdfDir() . '/image.jpg');
     }
 }

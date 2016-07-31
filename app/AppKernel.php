@@ -46,6 +46,11 @@ class AppKernel extends Kernel
         return dirname(__DIR__).'/var/logs';
     }
 
+    public function getPdfDir()
+    {
+        return dirname(__DIR__).'/var/pdfs';
+    }
+
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
