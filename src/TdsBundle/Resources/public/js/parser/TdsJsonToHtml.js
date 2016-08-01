@@ -10,7 +10,12 @@ Tds.Parsers.TdsJsonToHtml = {
         this.grid.removeAll();
         var items = GridStackUI.Utils.sort(dataToParse);
         _.each(items, function (node) {
-            this.grid.addWidget($('<div><div class="grid-stack-item-content">' + node.html + '<div/><div/>'),
+            var nodeHtml = node.html;
+
+            if(typeof nodeHtml == 'undefined'){
+                nodeHtml = '';
+            }
+            this.grid.addWidget($('<div><div class="grid-stack-item-content">' + nodeHtml + '<div/><div/>'),
                 node.x, node.y, node.width, node.height);
         }, this);
     },

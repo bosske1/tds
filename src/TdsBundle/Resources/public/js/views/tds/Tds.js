@@ -94,8 +94,8 @@ Tds.Views.Tds = Backbone.View.extend({
     showEditorModal : function (e) {
         $('#editor-modal').modal('show');
 
+        this.showEditor(e);
         this.onEditorSave(e);
-        this.showEditor();
     },
 
     onEditorSave : function (e) {
@@ -110,9 +110,17 @@ Tds.Views.Tds = Backbone.View.extend({
         });
     },
 
-    showEditor : function () {
+    showEditor : function (e) {
+        tinymce.remove("#editor-modal-body");
+
         tinymce.init({
-            selector: '#editor-modal-body'
+            selector: '#editor-modal-body',
+            setup : function(ed) {
+                ed.on('init', function(args) {
+                    tinymce.activeEditor.setContent('');
+                    tinymce.activeEditor.setContent($(e.currentTarget).html());
+                });
+            }
         });
     },
 
