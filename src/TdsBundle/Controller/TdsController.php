@@ -146,30 +146,32 @@ class TdsController extends Controller
      */
     public function getListAction(){
 
-        $data = $this->get('doctrine')
+        $responseData = [];
+
+        $tdsList = $this->get('doctrine')
             ->getRepository('TdsBundle:Tds')
             ->findAll(1);
 
-
-        $response = [];
-        foreach($data as $tds){
-            $tdsData['id']         = $tds->getId();
-            $tdsData['name']       = $tds->getName();
+        /** @var Tds $tds */
+        foreach($tdsList as $tds) {
+            $tdsData['id']      = $tds->getId();
+            $tdsData['name']    = $tds->getName();
             $tdsData['created_by'] = $tds->getCreatedByUser()->getFirstName();
-            $tdsData['dt_created'] = $tds->getDtCreated()->format('d-m-y');
-            $response[] = $tdsData;
+            $tdsData['dt_created'] = $tds->getDtCreated()->format('Y/m/d H:i:s');
+            $tdsData['can_read'] = true;
+            $tdsData['can_edit'] = true;
 
+            if(!$this->isGranted(TdsVoter::READ, $tds)){
+                $tdsData['can_read'] = false;
+            }
+
+            if(!$this->isGranted(TdsVoter::EDIT, $tds)){
+                $tdsData['can_edit'] = false;
+            }
+
+            $responseData[] = $tdsData;
         }
 
-        $data = [
-            ['name' => 'Mrkcina',
-            'created_by' => 'napravo neko',
-            'dt_created' => '01-03-1968'],
-            ['name' => 'Stogodus',
-            'created_by' => 'Nemanja',
-            'dt_created' => '01-03-1968']
-        ];
-
-        return  new JsonResponse(array('success' => true, 'count' => 4, 'data' => $response));
+        return  new JsonResponse(array('success' => true, 'count' => 4, 'data' => $responseData));
     }
 }
