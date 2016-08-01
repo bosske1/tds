@@ -119,4 +119,22 @@ class TdsController extends Controller
 
         return $fileName;
     }
+
+    /**
+     * Matches /tds/list
+     *
+     * @Route("/tds/list", name="tds_list")
+     */
+    public function getListAction(){
+        $data = [
+            ['name' => 'Mrkcina',
+            'created_by' => 'napravo neko',
+            'dt_created' => '01-03-1968'],
+            ['name' => 'Stogodus',
+            'created_by' => 'Nemanja',
+            'dt_created' => '01-03-1968']
+        ];
+
+        return  new JsonResponse(array('success' => true, 'count' => 4, 'data' => $data));
+    }
 }
