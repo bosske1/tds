@@ -145,6 +145,22 @@ class TdsController extends Controller
      * @Route("/tds/list", name="tds_list")
      */
     public function getListAction(){
+
+        $data = $this->get('doctrine')
+            ->getRepository('TdsBundle:Tds')
+            ->findAll(1);
+
+
+        $response = [];
+        foreach($data as $tds){
+            $tdsData['id']         = $tds->getId();
+            $tdsData['name']       = $tds->getName();
+            $tdsData['created_by'] = $tds->getCreatedByUser()->getFirstName();
+            $tdsData['dt_created'] = $tds->getDtCreated()->format('d-m-y');
+            $response[] = $tdsData;
+
+        }
+
         $data = [
             ['name' => 'Mrkcina',
             'created_by' => 'napravo neko',
@@ -154,6 +170,6 @@ class TdsController extends Controller
             'dt_created' => '01-03-1968']
         ];
 
-        return  new JsonResponse(array('success' => true, 'count' => 4, 'data' => $data));
+        return  new JsonResponse(array('success' => true, 'count' => 4, 'data' => $response));
     }
 }
