@@ -9,7 +9,9 @@ Tds.Views.Tds = Backbone.View.extend({
     events: {
         'click #save-button'    : 'saveTemplate',
         'click #generate-button': 'generateTemplate',
-        'dblclick .grid-stack-item-content' : 'showEditorModal'
+        'click #add-widget-button'              : 'addWidget',
+        'mouseup .grid-stack-item-content'      : 'removeWidget', //middle mouse click
+        'dblclick .grid-stack-item-content'     : 'showEditorModal'
     },
 
     initialize: function() {
@@ -97,10 +99,12 @@ Tds.Views.Tds = Backbone.View.extend({
     },
 
     onEditorSave : function (e) {
-        $( "#editor-modal-button-save" ).on( "click", function() {
-            var editorHtml = tinymce.activeEditor.getContent();
+        $( "#editor-modal-button-save" ).unbind().on( "click", function() {
+            //set new html markup to container from editor
+            $(e.currentTarget).html(tinymce.activeEditor.getContent());
 
-            $(e.currentTarget).html(editorHtml);
+            //reset editor content
+            tinymce.activeEditor.setContent('');
 
             $('#editor-modal').modal('hide');
         });
@@ -110,6 +114,23 @@ Tds.Views.Tds = Backbone.View.extend({
         tinymce.init({
             selector: '#editor-modal-body'
         });
+    },
+
+    addWidget : function () {
+        var grid = this.getGridStackContainer().data('gridstack');
+
+        grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
+            1, 1, 2, 2);
+    },
+
+    removeWidget : function (e) {
+        var grid = this.getGridStackContainer().data('gridstack');
+
+        if(e.button != 1) {
+            return false;
+        }
+
+        grid.removeWidget($(e.currentTarget).parent());
     },
 
     setTdsId : function(tdsId){
