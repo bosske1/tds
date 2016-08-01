@@ -10,7 +10,7 @@ Tds.Views.Tds = Backbone.View.extend({
         'click #save-button'    : 'saveTemplate',
         'click #generate-button': 'generateTemplate',
         'click #add-widget-button'              : 'addWidget',
-        'mouseup .grid-stack-item-content'      : 'removeWidget', //middle mouse click
+        'mousedown .grid-stack-item-content'    : 'removeWidget', //middle mouse click
         'dblclick .grid-stack-item-content'     : 'showEditorModal'
     },
 
