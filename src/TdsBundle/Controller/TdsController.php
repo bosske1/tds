@@ -20,6 +20,8 @@ class TdsController extends Controller
      */
     public function createAction(Request $request)
     {
+        $requestPayload = json_decode($request->getContent());
+
         // No token for now, until we figure out entire login
         /** @var User $user */
         $user = $this->get('doctrine')
@@ -31,7 +33,7 @@ class TdsController extends Controller
         $tds->setName('test')
             ->setCreatedByUser($user)
             ->setDtCreated(new \DateTime())
-            ->setData($request->get('data'));
+            ->setData($requestPayload->data);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($tds);
@@ -52,6 +54,8 @@ class TdsController extends Controller
      */
     public function updateAction(Request $request)
     {
+        $requestPayload = json_decode($request->getContent());
+
         // No token for now, until we figure out entire login
         /** @var User $user */
         $user = $this->get('doctrine')
@@ -62,10 +66,22 @@ class TdsController extends Controller
             ->getRepository('TdsBundle:Tds')
             ->find((int)$request->get('id'));
 
-        //new cool voter functionality
         if(!$this->isGranted(TdsVoter::EDIT, $tds)){
 
         }
+
+        /** @var Tds $tds */
+        $tds->setData($requestPayload->data);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($tds);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'success' => !empty($tds->getId()) ? true : false,
+                'id'      => $tds->getId()
+            )
+        );
     }
 
     /**
@@ -75,15 +91,18 @@ class TdsController extends Controller
      */
     public function readAction($id)
     {
+        /** @var Tds $tds */
+        $tds = $this->get('doctrine')
+            ->getRepository('TdsBundle:Tds')
+            ->find((int)$id);
+
+        if(!$this->isGranted(TdsVoter::READ, $tds)){
+
+        }
 
         return new JsonResponse(array(
-            'id' => $id,
-            'data' => array(
-                array('x' => 0, 'y' => 0, 'width' => 2, 'height' => 2),
-                array('x' => 3, 'y' => 1, 'width' => 1, 'height' => 2),
-                array('x' => 4, 'y' => 1, 'width' => 1, 'height' => 1),
-                array('x' => 2, 'y' => 3, 'width' => 3, 'height' => 1)
-            )
+            'id'   => $id,
+            'data' => json_decode($tds->getData(), true)
         ));
     }
 

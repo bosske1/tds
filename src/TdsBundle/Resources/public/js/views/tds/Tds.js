@@ -9,7 +9,9 @@ Tds.Views.Tds = Backbone.View.extend({
     events: {
         'click #save-button'    : 'saveTemplate',
         'click #generate-button': 'generateTemplate',
-        'dblclick .grid-stack-item-content' : 'showEditorModal'
+        'click #add-widget-button'              : 'addWidget',
+        'mousedown .grid-stack-item-content'    : 'removeWidget', //middle mouse click
+        'dblclick .grid-stack-item-content'     : 'showEditorModal'
     },
 
     initialize: function() {
@@ -92,24 +94,51 @@ Tds.Views.Tds = Backbone.View.extend({
     showEditorModal : function (e) {
         $('#editor-modal').modal('show');
 
+        this.showEditor(e);
         this.onEditorSave(e);
-        this.showEditor();
     },
 
     onEditorSave : function (e) {
-        $( "#editor-modal-button-save" ).on( "click", function() {
-            var editorHtml = tinymce.activeEditor.getContent();
+        $( "#editor-modal-button-save" ).unbind().on( "click", function() {
+            //set new html markup to container from editor
+            $(e.currentTarget).html(tinymce.activeEditor.getContent());
 
-            $(e.currentTarget).html(editorHtml);
+            //reset editor content
+            tinymce.activeEditor.setContent('');
 
             $('#editor-modal').modal('hide');
         });
     },
 
-    showEditor : function () {
+    showEditor : function (e) {
+        tinymce.remove("#editor-modal-body");
+
         tinymce.init({
-            selector: '#editor-modal-body'
+            selector: '#editor-modal-body',
+            setup : function(ed) {
+                ed.on('init', function(args) {
+                    tinymce.activeEditor.setContent('');
+                    tinymce.activeEditor.setContent($(e.currentTarget).html());
+                });
+            }
         });
+    },
+
+    addWidget : function () {
+        var grid = this.getGridStackContainer().data('gridstack');
+
+        grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
+            1, 1, 2, 2);
+    },
+
+    removeWidget : function (e) {
+        var grid = this.getGridStackContainer().data('gridstack');
+
+        if(e.button != 1) {
+            return false;
+        }
+
+        grid.removeWidget($(e.currentTarget).parent());
     },
 
     setTdsId : function(tdsId){
