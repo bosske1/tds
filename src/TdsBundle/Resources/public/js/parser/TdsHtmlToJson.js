@@ -7,12 +7,15 @@ Tds.Parsers.TdsHtmlToJson = {
 
         this.serializedData = _.map(this.getContainer().find('.grid-stack-item:visible'), function (el) {
             el = $(el);
-            var node = el.data('_gridstack_node');
+            var node = el.data('_gridstack_node'),
+                html = el.find('.grid-stack-item-content').html();
+
             return {
                 x: node.x,
                 y: node.y,
                 width: node.width,
-                height: node.height
+                height: node.height,
+                html  : html
             };
         }, this);
 

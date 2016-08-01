@@ -20,6 +20,8 @@ class TdsController extends Controller
      */
     public function createAction(Request $request)
     {
+        $requestPayload = json_decode($request->getContent());
+
         // No token for now, until we figure out entire login
         /** @var User $user */
         $user = $this->get('doctrine')
@@ -31,7 +33,7 @@ class TdsController extends Controller
         $tds->setName('test')
             ->setCreatedByUser($user)
             ->setDtCreated(new \DateTime())
-            ->setData($request->get('data'));
+            ->setData($requestPayload->data);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($tds);
