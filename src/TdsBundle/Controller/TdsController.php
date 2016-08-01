@@ -7,6 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use TdsBundle\Entity\Tds;
+use TdsBundle\Entity\User;
+use TdsBundle\Security\TdsVoter;
 
 class TdsController extends Controller
 {
@@ -17,7 +20,29 @@ class TdsController extends Controller
      */
     public function createAction(Request $request)
     {
-        var_dump(json_decode($request->getContent()));die();
+        // No token for now, until we figure out entire login
+        /** @var User $user */
+        $user = $this->get('doctrine')
+            ->getRepository('TdsBundle:User')
+            ->find(1);
+
+        /** @var Tds $tds */
+        $tds = new Tds();
+        $tds->setName('test')
+            ->setCreatedByUser($user)
+            ->setDtCreated(new \DateTime())
+            ->setData($request->get('data'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($tds);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'success' => !empty($tds->getId()) ? true : false,
+                'id'      => $tds->getId()
+            )
+        );
     }
 
     /**
@@ -27,7 +52,20 @@ class TdsController extends Controller
      */
     public function updateAction(Request $request)
     {
-        var_dump(json_decode($request->getContent()));die();
+        // No token for now, until we figure out entire login
+        /** @var User $user */
+        $user = $this->get('doctrine')
+            ->getRepository('TdsBundle:User')
+            ->find(1);
+
+        $tds = $this->get('doctrine')
+            ->getRepository('TdsBundle:Tds')
+            ->find((int)$request->get('id'));
+
+        //new cool voter functionality
+        if(!$this->isGranted(TdsVoter::EDIT, $tds)){
+
+        }
     }
 
     /**
