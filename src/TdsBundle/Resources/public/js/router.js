@@ -4,12 +4,13 @@ Tds.Router = Backbone.Router.extend({
         ''              : 'dashboard',
         'dashboard'     : 'dashboard',
 
-        'settings/segments'     : 'setSegments',
-        'settings/trademarks'   : 'setTrademarks',
-        'settings/prefixes'     : 'setPrefixes',
-        'settings/lang'         : 'setLang',
-        'settings/labels'       : 'setLabels',
-        'settings/units'        : 'setUnits',
+        'settings/segments'         : 'setSegments',
+        'settings/productStatuses'  : 'setProductStatuses',
+        'settings/trademarks'       : 'setTrademarks',
+        'settings/prefixes'         : 'setPrefixes',
+        'settings/lang'             : 'setLang',
+        'settings/labels'           : 'setLabels',
+        'settings/units'            : 'setUnits',
 
         'templates'     : 'templates',
         'translate'     : 'translate',
@@ -20,7 +21,9 @@ Tds.Router = Backbone.Router.extend({
     },
 
     initialize: function() {
+        var navigationView = new Tds.Views.Navigation();
 
+        $('#nav-container').html(navigationView.render().$el);
     },
 
     dashboard : function(){
@@ -71,6 +74,12 @@ Tds.Router = Backbone.Router.extend({
         var setSegmentsView = new Tds.Views.SetSegments();
 
         $('#main-container').html(setSegmentsView.render().$el);
+    },
+
+    setProductStatuses : function() {
+        var setProductStatusesView = new Tds.Views.SetProductStatuses();
+
+        $('#main-container').html(setProductStatusesView.render().$el);
     },
 
     setTrademarks : function() {

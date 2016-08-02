@@ -13,30 +13,87 @@ class NavigationController extends Controller
      */
     public function getAction()
     {
-        return new JsonResponse(array(
-            'data' => array(
-                array(
-                    'index'   => 'dashboard',
-                    'link'    => '#dashboard',
-                    'name'    => 'Dashboard',
-                    'visible' => true
-                ),
-                array(
-                    'index'   => 'settings',
-                    'link'    => '#set-options',
-                    'name'    => 'Settings',
-                    'visible' => true,
-                    'children'=> array(
-
+        $data = array(
+            array(
+                'label'     => 'Dashboard',
+                'link'      => 'dashboard',
+                'icon'      => 'fa fa-fw fa-dashboard',
+                'active'    => true,
+                'visible'   => true
+            ),
+            array(
+                'label'     => 'Settings',
+                'link'      => 'set-options',
+                'icon'      => 'fa fa-fw fa-wrench',
+                'visible'   => true,
+                'children'  => array(
+                    array(
+                        'label'     => 'Segments',
+                        'link'      => 'settings/segments',
+                        'visible'   => true
+                    ),
+                    array(
+                        'label'     => 'Product statuses',
+                        'link'      => 'settings/productStatuses',
+                        'visible'   => true
+                    ),
+                    array(
+                        'label'     => 'Trademarks',
+                        'link'      => 'settings/trademarks',
+                        'visible'   => true
+                    ),
+                    array(
+                        'label'     => 'Pre-fixes',
+                        'link'      => 'settings/prefixes',
+                        'visible'   => true
+                    ),
+                    array(
+                        'label'     => 'Labels',
+                        'link'      => 'settings/labels',
+                        'visible'   => true
+                    ),
+                    array(
+                        'label'     => 'Units',
+                        'link'      => 'settings/units',
+                        'visible'   => true
+                    ),
+                    array(
+                        'label'     => 'Languages',
+                        'link'      => 'settings/lang',
+                        'visible'   => true
                     )
-                ),
-                array(
-                    'index'   => 'templates',
-                    'link'    => '#templates',
-                    'name'    => 'Templates',
-                    'visible' => true
                 )
+            ),
+            array(
+                'label'     => 'Templates',
+                'link'      => 'templates',
+                'icon'      => 'fa fa-files-o',
+                'visible'   => true
+            ),
+            array(
+                'label'     => 'Translate',
+                'link'      => 'translate',
+                'icon'      => 'fa fa-language',
+                'visible'   => true
+            ),
+            array(
+                'label'     => 'Create TDS',
+                'link'      => 'tds/create',
+                'icon'      => 'fa fa-fw fa-edit',
+                'visible'   => true
+            ),
+            array(
+                'label'     => 'Search',
+                'link'      => 'tds/list',
+                'icon'      => 'fa fa-list-ul',
+                'visible'   => true
             )
+        );
+
+        return new JsonResponse(array(
+            'success' => true,
+            'length'    => count($data),
+            'data' => $data
         ));
     }
 }
