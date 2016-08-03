@@ -150,7 +150,7 @@ class TdsController extends Controller
 
         $tdsList = $this->get('doctrine')
             ->getRepository('TdsBundle:Tds')
-            ->findAll(1);
+            ->findAll();
 
         /** @var Tds $tds */
         foreach($tdsList as $tds) {
@@ -158,16 +158,8 @@ class TdsController extends Controller
             $tdsData['name']    = $tds->getName();
             $tdsData['created_by'] = $tds->getCreatedByUser()->getFirstName();
             $tdsData['dt_created'] = $tds->getDtCreated()->format('Y/m/d H:i:s');
-            $tdsData['can_read'] = true;
-            $tdsData['can_edit'] = true;
-
-            if(!$this->isGranted(TdsVoter::READ, $tds)){
-                $tdsData['can_read'] = false;
-            }
-
-            if(!$this->isGranted(TdsVoter::EDIT, $tds)){
-                $tdsData['can_edit'] = false;
-            }
+            $tdsData['can_read'] = $this->isGranted(TdsVoter::READ, $tds);
+            $tdsData['can_edit'] = $this->isGranted(TdsVoter::EDIT, $tds);;
 
             $responseData[] = $tdsData;
         }
