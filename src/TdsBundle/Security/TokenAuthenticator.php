@@ -86,7 +86,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         );
 
         //redirect stupid fuck out of here... add later some message...
-        if($request->getRequestUri() !== '/login'){
+        if($request->get('_route') !== 'login'){
             return new RedirectResponse('/login');
         }
 

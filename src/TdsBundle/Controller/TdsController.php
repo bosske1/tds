@@ -67,7 +67,7 @@ class TdsController extends Controller
             ->find((int)$request->get('id'));
 
         if(!$this->isGranted(TdsVoter::EDIT, $tds)){
-
+            throw new \Exception('You cannot edit this TDS!');
         }
 
         /** @var Tds $tds */
@@ -97,7 +97,7 @@ class TdsController extends Controller
             ->find((int)$id);
 
         if(!$this->isGranted(TdsVoter::READ, $tds)){
-
+            throw new \Exception('You cannot read this TDS!');
         }
 
         return $this->json(array(

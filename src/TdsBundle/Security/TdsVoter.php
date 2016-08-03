@@ -6,6 +6,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use TdsBundle\Entity\Tds;
 use TdsBundle\Entity\User;
+use TdsBundle\Repository\TdsRepository;
 
 class TdsVoter extends Voter
 {
@@ -21,7 +22,7 @@ class TdsVoter extends Voter
 
     /**
      * @param string $attribute
-     * @param mixed $tds
+     * @param Tds $tds
      * @param TokenInterface $token
      * @return bool
      */
@@ -32,14 +33,16 @@ class TdsVoter extends Voter
             return true;
         }
 
-        /* no token for now
-
         $user = $token->getUser();
 
         if (!$user instanceof User) {
             return false;
         }
-        */
+
+        // i'm not so sure about this, i should read docs...
+        if($attribute === self::EDIT && $user->getId() != $tds->getCreatedBy()){
+            return false;
+        }
 
         //just return true, until we get user from token...
         return true;

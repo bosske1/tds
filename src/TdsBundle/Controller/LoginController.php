@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class LoginController extends Controller
 {
     /**
-     * @Route("/login")
+     * @Route("/login", name="login")
      */
     public function indexAction()
     {
