@@ -90,7 +90,7 @@ class NavigationController extends Controller
             )
         );
 
-        return new JsonResponse(array(
+        return $this->json(array(
             'success' => true,
             'length'    => count($data),
             'data' => $data

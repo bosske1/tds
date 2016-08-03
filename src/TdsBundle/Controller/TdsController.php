@@ -39,7 +39,7 @@ class TdsController extends Controller
         $em->persist($tds);
         $em->flush();
 
-        return new JsonResponse(
+        return $this->json(
             array(
                 'success' => !empty($tds->getId()) ? true : false,
                 'id'      => $tds->getId()
@@ -76,7 +76,7 @@ class TdsController extends Controller
         $em->persist($tds);
         $em->flush();
 
-        return new JsonResponse(
+        return $this->json(
             array(
                 'success' => !empty($tds->getId()) ? true : false,
                 'id'      => $tds->getId()
@@ -100,7 +100,7 @@ class TdsController extends Controller
 
         }
 
-        return new JsonResponse(array(
+        return $this->json(array(
             'id'   => $id,
             'data' => json_decode($tds->getData(), true)
         ));
@@ -119,7 +119,7 @@ class TdsController extends Controller
         $fileName = $this->generateFileName($html);
 
         if($fileName){
-            return new JsonResponse(
+            return $this->json(
                 array(
                     'file_name' => $fileName
                 )
@@ -164,6 +164,6 @@ class TdsController extends Controller
             $responseData[] = $tdsData;
         }
 
-        return  new JsonResponse(array('success' => true, 'count' => 4, 'data' => $responseData));
+        return $this->json(array('success' => true, 'count' => 4, 'data' => $responseData));
     }
 }
