@@ -82,3 +82,11 @@ knp_snappy:
         enabled:    true
         binary:     /usr/local/bin/wkhtmltoimage
         options:    []
+
+security:
+    # ...
+
+    providers:
+        your_db_provider:
+            entity:
+                class: TdsBundle:User
