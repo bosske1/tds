@@ -16,12 +16,12 @@ use Doctrine\ORM\EntityManager;
 
 class TokenAuthenticator extends AbstractGuardAuthenticator
 {
-    private $em;
+    private $entityManager;
     private $session;
 
-    public function __construct(EntityManager $em, Session $session)
+    public function __construct(EntityManager $entityManager, Session $session)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
         $this->session = $session;
     }
 
@@ -33,13 +33,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     {
         $token = $request->get('token');
 
-        if(!$token){
-            //check token in session
-            $token = $this->session->get('token');
-        }
-
-        if (!$token) {
-            // no token? Return null and no other methods will be called
+        if (!$token && !$token = $this->session->get('token')){
             return false;
         }
 
@@ -55,7 +49,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
         // if null, authentication will fail
         // if a User object, checkCredentials() is called
-        return $this->em->getRepository('TdsBundle:User')
+        return $this->entityManager->getRepository('TdsBundle:User')
             ->findOneBy(array('firstName' => $apiKey));
     }
 
@@ -73,7 +67,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         // on success, set session for user, based on firstName for now :)
         $this->session->set('token', $token->getUser()->getFirstName());
 
-        return null;
+        return;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
