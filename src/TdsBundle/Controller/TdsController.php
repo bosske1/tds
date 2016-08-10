@@ -4,6 +4,7 @@ namespace TdsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,9 +15,10 @@ use TdsBundle\Security\TdsVoter;
 class TdsController extends Controller
 {
     /**
-     * Matches /tds/create
+     * Matches /tds
      *
-     * @Route("/tds/create", name="tds_create")
+     * @Route("/tds", name="tds_create")
+     * @Method("POST")
      */
     public function createAction(Request $request)
     {
@@ -48,9 +50,10 @@ class TdsController extends Controller
     }
 
     /**
-     * Matches /tds/update/*
+     * Matches /tds/*
      *
-     * @Route("/tds/update/{id}", name="tds_update")
+     * @Route("/tds/{id}", name="tds_update")
+     * @Method("PUT")
      */
     public function updateAction(Request $request)
     {
@@ -85,9 +88,10 @@ class TdsController extends Controller
     }
 
     /**
-     * Matches /tds/read/*
+     * Matches /tds/*
      *
-     * @Route("/tds/read/{id}", name="tds_get")
+     * @Route("/tds/{id}", name="tds_get")
+     * @Method("GET")
      */
     public function readAction($id)
     {

@@ -81,9 +81,9 @@ Tds.Views.Tds = Backbone.View.extend({
 
     getSaveUrl : function () {
         if(this.getIsEditView() && this.getTdsId() != null){
-            return '/tds/update/' + this.getTdsId();
+            return '/tds/' + this.getTdsId();
         } else {
-            return '/tds/create';
+            return '/tds';
         }
     },
 

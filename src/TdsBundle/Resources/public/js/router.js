@@ -55,7 +55,7 @@ Tds.Router = Backbone.Router.extend({
             tdsModel = new Tds.Models.Tds();
 
         tdsModel.fetch({
-            url: '/tds/read/' + id,
+            url: '/tds/' + id,
             success: function (model, response, options) {
                 tdsView.setIsEditView(true)
                        .setModel(model)
