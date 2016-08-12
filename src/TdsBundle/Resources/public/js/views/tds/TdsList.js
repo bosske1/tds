@@ -19,47 +19,40 @@ Tds.Views.TdsList = Backbone.View.extend({
     },
 
     getData: function() {
-        var me = this;
-        var postData = 'some data for request';
+        var me = this,
+            collection = new Tds.Collections.Tds;
 
-        $.ajax({
-            type: 'POST',
-            //src/TdsBundle/Controller/TdsController.php
-            url: "/tds/list",
-            data: postData,
-            success: function(response){
-                if(response.success){
-                    me.fillTable(response);
+        collection.fetch({
+            success: function(collection, response){
+                if(collection){
+                    me.fillTable(collection);
                 } else {
-                    alert(response.error_message);
+                    alert(response['error_message']);
                 }
             },
-            dataType: 'json'
+            failure: function(){
+
+            }
         });
 
         return this;
-
     },
 
-    fillTable: function(response) {
-        var me = this;
+    fillTable: function(collection) {
+        var me = this,
+            tableContentText = '';
 
-        var data = response.data;
-
-        var text = '';
-        for (i = 0; i < data.length; i++) {
-        text +=
-            "<tr>"+
-                "<td>"+data[i].name+"</td>"+
-                "<td>"+data[i].created_by+"</td>"+
-                "<td>"+data[i].dt_created+"</td>"+
+        collection.each(function(model){
+            tableContentText +=
+                "<tr>"+
+                "<td>"+model.get('name')+"</td>"+
+                "<td>"+model.get('created_by')+"</td>"+
+                "<td>"+model.get('dt_created')+"</td>"+
                 "<td>"+"menu ikonice"+"</td>"+
-            "</tr>";
+                "</tr>";
+        });
 
-
-        }
-
-        this.$('#table-content').append(text);
+        this.$('#table-content').append(tableContentText);
 
         return this;
     }

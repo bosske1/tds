@@ -109,13 +109,15 @@ class TdsController extends Controller
 
         $fileName = $this->generateFileName($html);
 
-        if($fileName){
-            return $this->json(
-                array(
-                    'file_name' => $fileName
-                )
-            );
+        if(!$fileName){
+            throw new \Exception('File not created!');
         }
+
+        return $this->json(
+            array(
+                'file_name' => $fileName
+            )
+        );
     }
 
     protected function generateFileName($html)
@@ -131,9 +133,10 @@ class TdsController extends Controller
     }
 
     /**
-     * Matches /tds/list
+     * Matches /tds
      *
-     * @Route("/tds/list", name="tds_list")
+     * @Route("/tds", name="tds_list")
+     * @Method("GET")
      */
     public function getListAction(){
 
@@ -155,6 +158,6 @@ class TdsController extends Controller
             $responseData[] = $tdsData;
         }
 
-        return $this->json(array('success' => true, 'count' => 4, 'data' => $responseData));
+        return $this->json(array('success' => true, 'count' => count($responseData), 'data' => $responseData));
     }
 }

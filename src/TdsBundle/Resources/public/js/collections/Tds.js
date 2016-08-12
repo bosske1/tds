@@ -1,4 +1,8 @@
-Tds.Collections.Toolbar = Backbone.Collection.extend({
+Tds.Collections.Tds = Backbone.Collection.extend({
     model   :   Tds.Models.Tds,
-    url     :   'tds/getAll'
+    url     :   '/tds',
+
+    parse: function(data){
+        return data['data'];
+    }
 });
