@@ -22,11 +22,8 @@ class TdsController extends Controller
      */
     public function createAction(Request $request)
     {
-        // No token for now, until we figure out entire login
         /** @var User $user */
-        $user = $this->get('doctrine')
-            ->getRepository('TdsBundle:User')
-            ->find(1);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
         /** @var Tds $tds */
         $tds = new Tds();
@@ -55,12 +52,6 @@ class TdsController extends Controller
      */
     public function updateAction(Request $request)
     {
-        // No token for now, until we figure out entire login
-        /** @var User $user */
-        $user = $this->get('doctrine')
-            ->getRepository('TdsBundle:User')
-            ->find(1);
-
         $tds = $this->get('doctrine')
             ->getRepository('TdsBundle:Tds')
             ->find((int)$request->get('id'));
