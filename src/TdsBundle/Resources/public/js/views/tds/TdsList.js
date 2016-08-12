@@ -8,12 +8,10 @@ Tds.Views.TdsList = Backbone.View.extend({
         var html = this.template();
         this.$el.html(html);
 
-        this.postrender();
-
         return this;
     },
 
-    postrender: function() {
+    afterRender: function() {
 
         this.getData();
     },
