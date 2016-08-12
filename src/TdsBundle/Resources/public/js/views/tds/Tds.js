@@ -65,8 +65,7 @@ Tds.Views.Tds = Backbone.View.extend({
 
                     //create error handler...
                 }
-            },
-            {url: me.getGenerateUrl()});
+            });
     },
 
     loadTemplate : function(){
