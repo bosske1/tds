@@ -16,7 +16,7 @@ class Version20160920191837 extends AbstractMigration
     public function up(Schema $schema)
     {
         $this->addSql("CREATE TABLE `tds` (
-                      `tds_id` INT(11) NOT NULL AUTO_INCREMENT,
+                      `id` INT(11) NOT NULL AUTO_INCREMENT,
                       `created_by` INT(11) NULL,
                       `name` VARCHAR(255) NULL,
                       `dt_created` DATETIME NULL,
