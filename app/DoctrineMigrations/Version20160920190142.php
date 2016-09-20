@@ -16,10 +16,10 @@ class Version20160920190142 extends AbstractMigration
     public function up(Schema $schema)
     {
         $this->addSql("CREATE TABLE `user` (
-                      `user_id` INT(11) NOT NULL,
+                      `id` INT(11) NOT NULL AUTO_INCREMENT,
                       `first_name` VARCHAR(45) NULL,
                       `last_name` VARCHAR(45) NULL,
-                      PRIMARY KEY (`user_id`));");
+                      PRIMARY KEY (`id`));");
     }
 
     /**
