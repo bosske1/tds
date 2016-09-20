@@ -2,6 +2,9 @@ tds:
     resource: "@TdsBundle/Controller/"
     type:     annotation
     prefix:   /
+settings:
+    resource: "@SettingsBundle/Controller/"
+    type:     annotation
 
 app:
     resource: "@AppBundle/Controller/"
