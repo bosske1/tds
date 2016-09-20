@@ -1,6 +1,9 @@
 <?php
 
 namespace TdsBundle\Repository;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\ORM\Query\ResultSetMapping;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * TdsRepository
@@ -10,4 +13,35 @@ namespace TdsBundle\Repository;
  */
 class TdsRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * \Doctrine\ORM\QueryBuilder $queryBuilder
+     */
+    protected $queryBuilder;
+
+    public function findByFilters($filter) {
+        return $this->setQueryBuilder()->setFilters($filter)->getResult();
+    }
+
+    protected function setQueryBuilder()
+    {
+        $this->queryBuilder = $this->getEntityManager()->getRepository('TdsBundle\Entity\Tds')->createQueryBuilder('t');
+
+        return $this;
+    }
+
+    protected function setFilters($filter)
+    {
+        $name = $filter['name'];
+        $dt_created = $filter['dt_created'];
+
+        $this->queryBuilder->where('t.name = :name')->setParameter('name', 'test');
+
+        return $this;
+    }
+
+    protected function getResult()
+    {
+        return $this->queryBuilder->getQuery()->getResult();
+    }
 }

@@ -47,23 +47,49 @@ Tds.Views.Navigation = Backbone.View.extend({
         var element = '';
 
         if(_.isEmpty(item.children)) {
-            element += '<li'+((item.active==true)?' class="active"':'')+'>';
-            element += '<a href="#' + item.link + '">';
+            if(item.label == 'Search'){
+                element += '<li style="margin: 10px 10px 10px 0px;" '+((item.active==true)?' class="active"':'')+'>';
+                element += '<a style="display: inline;" href="#' + item.link + '">';
 
-            if(item.icon) {
-                element += me.getIconElement(item.icon);
+                if(item.icon) {
+                    element += me.getIconElement(item.icon);
+                }
+
+                element += item.label + '</a>';
+                element += '<a style="display: inline;" href="#tds/searchAdd" style="z-index: 10; float: right;" id="edit-search-menu" class="fa fa-plus"></a></li>';
+
+            } else {
+                element += '<li'+((item.active==true)?' class="active"':'')+'>';
+                element += '<a href="#' + item.link + '">';
+
+                if(item.icon) {
+                    element += me.getIconElement(item.icon);
+                }
+
+                element += item.label + '</a></li>';
             }
 
-            element += item.label + '</a></li>';
         } else {
-            element += '<li>';
-            element += '<a href="javascript:;" data-toggle="collapse" data-target="#' + item.link + '">';
-            element += me.getIconElement(item.icon);
-            element += item.label;
-            element += me.getIconElement('fa fa-fw fa-caret-down');
-            element += '</a>';
-            element += me.getListElement(item);
-            element += '</li>';
+            if(item.label == 'Search'){
+                element += '<li>';
+                element += '<a style="display: inline;" href="javascript:;" data-toggle="collapse" data-target="#' + item.link + '">';
+                element += me.getIconElement(item.icon);
+                element += item.label;
+                element += me.getIconElement('fa fa-fw fa-caret-down');
+                element += '</a>';
+                element += '<a style="display: inline;" href="#tds/searchAdd" style="z-index: 10; float: right;" id="edit-search-menu" class="fa fa-plus"></a>';
+                element += me.getListElement(item);
+                element += '</li>';
+            } else {
+                element += '<li>';
+                element += '<a href="javascript:;" data-toggle="collapse" data-target="#' + item.link + '">';
+                element += me.getIconElement(item.icon);
+                element += item.label;
+                element += me.getIconElement('fa fa-fw fa-caret-down');
+                element += '</a>';
+                element += me.getListElement(item);
+                element += '</li>';
+            }
         }
 
         return element;

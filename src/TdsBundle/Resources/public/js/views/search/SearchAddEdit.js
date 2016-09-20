@@ -1,13 +1,17 @@
-Tds.Views.TdsList = Backbone.View.extend({
+/**
+ * Created by bojanic on 13.9.16..
+ */
+Tds.Views.SearchAddEdit = Backbone.View.extend({
 
     initialize: function() {
-        this.template= _.template($('#tpl-tds-list').html());
+        this.template= _.template($('#tpl-search-add-edit').html());
     },
 
     render: function() {
         var html = this.template();
         this.$el.html(html);
 
+        this.afterRender();
         return this;
     },
 
@@ -55,7 +59,7 @@ Tds.Views.TdsList = Backbone.View.extend({
                 "<td>"+model.get('created_by')+"</td>"+
                 "<td>"+model.get('dt_created')+"</td>"+
                 "<td>" +
-                    "<span><a href='#tds/edit/"+ model.get('id') + "' class='fa fa-fw fa-edit'></a></span>" +
+                "<span><a href='#tds/edit/"+ model.get('id') + "' class='fa fa-fw fa-edit'></a></span>" +
                 "</td>"+
                 "</tr>";
         });

@@ -138,13 +138,13 @@ class TdsController extends Controller
      * @Route("/tds", name="tds_list")
      * @Method("GET")
      */
-    public function getListAction(){
+    public function getListAction(Request $request){
 
         $responseData = [];
 
         $tdsList = $this->get('doctrine')
             ->getRepository('TdsBundle:Tds')
-            ->findAll();
+            ->findByFilters($request->get('filter'));
 
         /** @var Tds $tds */
         foreach($tdsList as $tds) {

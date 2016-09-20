@@ -17,7 +17,8 @@ Tds.Router = Backbone.Router.extend({
 
         'tds/list'       : 'tdsList',
         'tds/create'     : 'tdsCreate',
-        'tds/edit/:id'   : 'tdsEdit'
+        'tds/edit/:id'   : 'tdsEdit',
+        'tds/searchAdd'  : 'tdsSearchAdd'
     },
 
     initialize: function() {
@@ -122,5 +123,11 @@ Tds.Router = Backbone.Router.extend({
         var translateView = new Tds.Views.Translate();
 
         $('#main-container').html(translateView.render().$el);
+    },
+
+    tdsSearchAdd: function() {
+        var tdsSearchAddView = new Tds.Views.SearchAddEdit();
+
+        $('#main-container').html(tdsSearchAddView.render().$el);
     }
 });
