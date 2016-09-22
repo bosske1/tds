@@ -3,7 +3,7 @@ Tds.Models.Segment = Backbone.Model.extend({
     url : '/segment',
 
     defaults: {
-        id          :   null,s
+        id          :   null,
         name	    :   null
     },
 
