@@ -21,7 +21,7 @@ class Version20160920191837 extends AbstractMigration
                       `name` VARCHAR(255) NULL,
                       `dt_created` DATETIME NULL,
                       `data` TEXT NULL,
-                      PRIMARY KEY (`tds_id`));
+                      PRIMARY KEY (`id`));
                     ");
 
     }
