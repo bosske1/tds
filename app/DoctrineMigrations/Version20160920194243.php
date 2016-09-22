@@ -18,6 +18,8 @@ class Version20160920194243 extends AbstractMigration
         $this->addSql("CREATE TABLE `product_status` (
                       `id` INT(11) NOT NULL AUTO_INCREMENT,
                       `name` VARCHAR(45) NULL,
+                      `created` DATETIME NULL,
+                      `created_by` INT(11) NULL,
                       PRIMARY KEY (`id`));");
     }
 
