@@ -9,5 +9,29 @@ Tds.Views.SetSegments = Backbone.View.extend({
         this.$el.html(html);
 
         return this;
+    },
+
+    afterRender: function() {
+        this.getData();
+    },
+
+    getData: function() {
+        var me = this,
+            collection = new Tds.Collections.Segment;
+
+        collection.fetch({
+            success: function(collection, response){
+                if(collection){
+                    me.fillTable(collection);
+                } else {
+                    alert(response['error_message']);
+                }
+            },
+            failure: function(){
+
+            }
+        });
+
+        return this;
     }
 });
