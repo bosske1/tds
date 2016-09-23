@@ -25,16 +25,9 @@ class Segment
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=55)
      */
     private $name;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created", type="datetime")
-     */
-    private $created;
 
     /**
      * @var int
@@ -44,10 +37,17 @@ class Segment
     private $createdBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="TdsBundle\Entity\User")
      * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
     private $createdByUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dt_created", type="datetime")
+     */
+    private $dtCreated;
 
     /**
      * Get id
@@ -60,6 +60,22 @@ class Segment
     }
 
     /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Segment
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
      * @return string
      */
     public function getName()
@@ -68,30 +84,22 @@ class Segment
     }
 
     /**
-     * @param string $name
+     * Set createdBy
+     *
+     * @param integer $createdBy
+     *
+     * @return Segment
      */
-    public function setName($name)
+    public function setCreatedBy($createdBy)
     {
-        $this->name = $name;
+        $this->createdBy = $createdBy;
+
+        return $this;
     }
 
     /**
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * @param \DateTime $created
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-    }
-
-    /**
+     * Get createdBy
+     *
      * @return int
      */
     public function getCreatedBy()
@@ -100,16 +108,36 @@ class Segment
     }
 
     /**
-     * @param int $createdBy
+     * Set dtCreated
+     *
+     * @param \DateTime $dtCreated
+     *
+     * @return Segment
      */
-    public function setCreatedBy($createdBy)
+    public function setDtCreated($dtCreated)
     {
-        $this->createdBy = $createdBy;
+        $this->dtCreated = $dtCreated;
+
+        if(isset($this->dtCreated)){
+            $this->dtCreated = new \DateTime();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get dtCreated
+     *
+     * @return \DateTime
+     */
+    public function getDtCreated()
+    {
+        return $this->dtCreated;
     }
 
     /**
      * @param User $user
-     * @return $this
+     * @return Segment
      */
     public function setCreatedByUser(User $user)
     {
@@ -126,4 +154,3 @@ class Segment
         return $this->createdByUser;
     }
 }
-
