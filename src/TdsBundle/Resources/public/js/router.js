@@ -5,6 +5,9 @@ Tds.Router = Backbone.Router.extend({
         'dashboard'     : 'dashboard',
 
         'settings/segments'         : 'setSegments',
+        'settings/segment/create'   : 'createSegment',
+        'settings/segment/edit/:id' : 'editSegment',
+
         'settings/productStatuses'  : 'setProductStatuses',
         'settings/trademarks'       : 'setTrademarks',
         'settings/prefixes'         : 'setPrefixes',
@@ -27,19 +30,19 @@ Tds.Router = Backbone.Router.extend({
         $('#nav-container').html(navigationView.render().$el);
     },
 
-    dashboard : function(){
+    dashboard: function() {
         var dashboardView = new Tds.Views.Dashboard();
 
         $('#main-container').html(dashboardView.render().$el);
     },
 
-    tdsList : function(){
+    tdsList: function() {
         var tdsListView = new Tds.Views.TdsList();
 
         Tds.renderView(tdsListView);
     },
 
-    tdsCreate : function(){
+    tdsCreate: function() {
         var tdsView = new Tds.Views.Tds(),
             tdsModel = new Tds.Models.Tds();
         
@@ -50,7 +53,7 @@ Tds.Router = Backbone.Router.extend({
         Tds.renderView(tdsView);
     },
 
-    tdsEdit   : function(id){
+    tdsEdit: function(id) {
         var me = this,
             tdsView  = new Tds.Views.Tds(),
             tdsModel = new Tds.Models.Tds();
@@ -71,63 +74,90 @@ Tds.Router = Backbone.Router.extend({
         });
     },
 
-    setSegments : function() {
+    setSegments: function() {
         var setSegmentsView = new Tds.Views.SetSegments();
 
-        $('#main-container').html(setSegmentsView.render().$el);
+        Tds.renderView(setSegmentsView);
     },
 
-    setProductStatuses : function() {
+    createSegment: function () {
+        var createSegmentView = new Tds.Views.Segment();
+
+        Tds.renderView(createSegmentView);
+    },
+
+    editSegment: function (id) {
+        var me = this,
+            segmentView  = new Tds.Views.Segment(),
+            segmentModel = new Tds.Models.Segment();
+
+        segmentModel.fetch({
+            url: '/segment/' + id,
+            success: function (model, response, options) {
+                segmentView.setIsEditView(true)
+                    .setModel(model)
+                    .setSegmentId(id);
+
+                Tds.renderView(segmentView);
+            },
+            error: function (collection, response, options) {
+
+                //create error handler...
+            }
+        });
+    },
+
+    setProductStatuses: function() {
         var setProductStatusesView = new Tds.Views.SetProductStatuses();
 
-        $('#main-container').html(setProductStatusesView.render().$el);
+        Tds.renderView(setProductStatusesView);
     },
 
-    setTrademarks : function() {
+    setTrademarks: function() {
         var setTrademarksView = new Tds.Views.SetTrademarks();
 
-        $('#main-container').html(setTrademarksView.render().$el);
+        Tds.renderView(setTrademarksView);
     },
 
-    setPrefixes : function() {
+    setPrefixes: function() {
         var setPrefixesView = new Tds.Views.SetPrefixes();
 
-        $('#main-container').html(setPrefixesView.render().$el);
+        Tds.renderView(setPrefixesView);
     },
 
-    setLang : function() {
+    setLang: function() {
         var setLangView = new Tds.Views.SetLang();
 
-        $('#main-container').html(setLangView.render().$el);
+        Tds.renderView(setLangView);
     },
 
     setLabels: function() {
         var setLabelsView = new Tds.Views.SetLabels();
 
-        $('#main-container').html(setLabelsView.render().$el);
+        Tds.renderView(setLabelsView);
     },
 
-    setUnits : function() {
+    setUnits: function() {
         var setUnitsView = new Tds.Views.SetUnits();
 
-        $('#main-container').html(setUnitsView.render().$el);
+        Tds.renderView(setUnitsView);
     },
 
-    templates : function() {
+    templates: function() {
         var templatesView = new Tds.Views.Templates();
 
-        $('#main-container').html(templatesView.render().$el);
+        Tds.renderView(templatesView);
     },
 
     translate : function() {
         var translateView = new Tds.Views.Translate();
 
-        $('#main-container').html(translateView.render().$el);
+        Tds.renderView(translateView);
     },
 
     tdsSearchAdd: function() {
         var tdsSearchAddView = new Tds.Views.SearchAddEdit();
 
-        $('#main-container').html(tdsSearchAddView.render().$el);
+        Tds.renderView(tdsSearchAddView);
     }
 });

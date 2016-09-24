@@ -50,6 +50,26 @@ class Segment
     private $dtCreated;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="modified_by", type="integer")
+     */
+    private $modifiedBy;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TdsBundle\Entity\User")
+     * @ORM\JoinColumn(name="modified_by", referencedColumnName="id")
+     */
+    private $modifiedByUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dt_modified", type="datetime")
+     */
+    private $dtModified;
+
+    /**
      * Get id
      *
      * @return int
@@ -84,30 +104,6 @@ class Segment
     }
 
     /**
-     * Set createdBy
-     *
-     * @param integer $createdBy
-     *
-     * @return Segment
-     */
-    public function setCreatedBy($createdBy)
-    {
-        $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
-    /**
-     * Get createdBy
-     *
-     * @return int
-     */
-    public function getCreatedBy()
-    {
-        return $this->createdBy;
-    }
-
-    /**
      * Set dtCreated
      *
      * @param \DateTime $dtCreated
@@ -136,6 +132,30 @@ class Segment
     }
 
     /**
+     * Set createdBy
+     *
+     * @param integer $createdBy
+     *
+     * @return Segment
+     */
+    public function setCreatedBy($createdBy)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return int
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
      * @param User $user
      * @return Segment
      */
@@ -152,5 +172,56 @@ class Segment
     public function getCreatedByUser()
     {
         return $this->createdByUser;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDtModified()
+    {
+        return $this->dtModified;
+    }
+
+    /**
+     * @param \DateTime $dtModified
+     */
+    public function setDtModified($dtModified)
+    {
+        $this->dtModified = $dtModified;
+    }
+
+    /**
+     * @return int
+     */
+    public function getModifiedBy()
+    {
+        return $this->modifiedBy;
+    }
+
+    /**
+     * @param int $modifiedBy
+     */
+    public function setModifiedBy($modifiedBy)
+    {
+        $this->modifiedBy = $modifiedBy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModifiedByUser()
+    {
+        return $this->modifiedByUser;
+    }
+
+    /**
+     * @param User $user
+     * @return Segment
+     */
+    public function setModifiedByUser(User $user)
+    {
+        $this->modifiedByUser = $user;
+
+        return $this;
     }
 }

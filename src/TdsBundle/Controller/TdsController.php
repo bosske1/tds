@@ -30,7 +30,9 @@ class TdsController extends Controller
         $tds->setName('test')
             ->setCreatedByUser($user)
             ->setDtCreated(new \DateTime())
-            ->setData($request->get('data'));
+            ->setData($request->get('data'))
+            ->setModifiedByUser($user)
+            ->setDtModified(new \DateTime());
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($tds);
@@ -52,6 +54,9 @@ class TdsController extends Controller
      */
     public function updateAction(Request $request)
     {
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
         $tds = $this->get('doctrine')
             ->getRepository('TdsBundle:Tds')
             ->find((int)$request->get('id'));
@@ -61,7 +66,10 @@ class TdsController extends Controller
         }
 
         /** @var Tds $tds */
-        $tds->setData($request->get('data'));
+        $tds->setData($request->get('data'))
+            ->setModifiedByUser($user)
+            ->setDtModified(new \DateTime());
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($tds);
         $em->flush();
@@ -138,7 +146,8 @@ class TdsController extends Controller
      * @Route("/tds", name="tds_list")
      * @Method("GET")
      */
-    public function getListAction(Request $request){
+    public function getListAction(Request $request)
+    {
 
         $responseData = [];
 

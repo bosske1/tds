@@ -49,6 +49,26 @@ class Tds
     private $dtCreated;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="modified_by", type="integer")
+     */
+    private $modifiedBy;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TdsBundle\Entity\User")
+     * @ORM\JoinColumn(name="modified_by", referencedColumnName="id")
+     */
+    private $modifiedByUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dt_modified", type="datetime")
+     */
+    private $dtModified;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="data", type="text", nullable=true)
@@ -182,6 +202,57 @@ class Tds
     public function getCreatedByUser()
     {
         return $this->createdByUser;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDtModified()
+    {
+        return $this->dtModified;
+    }
+
+    /**
+     * @param \DateTime $dtModified
+     */
+    public function setDtModified($dtModified)
+    {
+        $this->dtModified = $dtModified;
+    }
+
+    /**
+     * @return int
+     */
+    public function getModifiedBy()
+    {
+        return $this->modifiedBy;
+    }
+
+    /**
+     * @param int $modifiedBy
+     */
+    public function setModifiedBy($modifiedBy)
+    {
+        $this->modifiedBy = $modifiedBy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModifiedByUser()
+    {
+        return $this->modifiedByUser;
+    }
+
+    /**
+     * @param User $user
+     * @return Tds
+     */
+    public function setModifiedByUser(User $user)
+    {
+        $this->modifiedByUser = $user;
+
+        return $this;
     }
 }
 
