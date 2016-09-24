@@ -1,0 +1,44 @@
+<script type="text/template" id="tpl-modal">
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!--button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button-->
+                    <span class="pull-right icon-close" class="close" data-dismiss="modal" aria-label="Close"></span>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <%= modalTitle %>
+                    </h4>
+                </div>
+
+                <div class="alert alert-danger" style='display:none' role="alert">
+                    <button type="button" class="close dismiss-alert-danger" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <span class='errorText'></span>
+                </div>
+
+                <div class="modal-body">
+                    <div id="loadingMask" style="display:none">
+                        <img src="" />
+                    </div>
+
+                    <div class="alert alert-success" style='display:none' role="alert">
+                        <button type="button" class="close dismiss-alert-success" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <span class='successText'></span>
+                    </div>
+                    <!-- view body goes here -->
+
+                    <div id="view-body"></div>
+
+                    <!-- /view body goes here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="saveBtn" style="display:none" class="btn btn-primary"><%= saveTitle %></button>
+                    <button type="button" id="closeBtn" class="btn btn-default" data-dismiss="modal"><%= closeTitle %></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

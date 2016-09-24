@@ -61,9 +61,11 @@ Tds.Views.SetSegments = Backbone.View.extend({
     },
 
     createSegment: function () {
-        var segmentTemplate = _.template($('#tpl-segment').html());
-        this.$el.append(segmentTemplate);
-
-        return this;
+        Tds.getView('Modal').setMainContainer('main-container')
+            .setTitle('Create segment')
+            .setSaveTitle('Save')
+            .setCloseTitle('Cancel')
+            .setView(new Tds.Views.Segment())
+            .show();
     }
 });

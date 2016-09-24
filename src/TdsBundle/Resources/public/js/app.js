@@ -45,5 +45,11 @@ window.Tds = {
         this.getContainer().css({
             height : navBarHeight - 20
         })
+    },
+
+    getView: function(key) {
+        var view = new Tds.Views[key]();
+
+        return view;
     }
 };

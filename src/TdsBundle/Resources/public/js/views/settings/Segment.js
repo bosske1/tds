@@ -11,12 +11,29 @@ Tds.Views.Segment = Backbone.View.extend({
     },
 
     initialize: function() {
-        this.template= _.template($('#tpl-set-segments').html());
+        this.template= _.template($('#tpl-segment').html());
     },
 
     render: function() {
         var html = this.template();
         this.$el.html(html);
+
+        this.postRender();
+
+        return this;
+    },
+
+    bindEvents: function() {
+        var me = this;
+
+        this.off('saveEvent');
+        this.on('saveEvent', this.onSave, this);
+
+        return this;
+    },
+
+    postRender: function(view) {
+        this.bindEvents();
 
         return this;
     },
@@ -47,5 +64,9 @@ Tds.Views.Segment = Backbone.View.extend({
 
     getIsEditView: function() {
         return this.isEditView;
+    },
+
+    onSave: function () {
+        alert('radi');
     }
 });
