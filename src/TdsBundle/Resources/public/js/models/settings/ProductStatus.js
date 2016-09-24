@@ -9,7 +9,8 @@ Tds.Models.ProductStatus = Backbone.Model.extend({
         id          :   null,
         name	    :   null,
         created     :   null,
-        created_by  :   null
+        created_by  :   null,
+        html        :   ''
     },
 
     initialize: function() {
