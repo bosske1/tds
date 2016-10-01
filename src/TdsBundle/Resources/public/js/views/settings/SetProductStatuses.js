@@ -23,7 +23,6 @@ Tds.Views.SetProductStatuses = Backbone.View.extend({
         var me = this,
             collection = new Tds.Collections.ProductStatus;
 
-        console.log(collection);
         collection.fetch({
             success: function(collection, response) {
                 if(collection){
