@@ -8,16 +8,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use SettingsBundle\Entity\Segment;
+use SettingsBundle\Entity\Trademark;
 use TdsBundle\Entity\User;
 
 class TrademarkController extends Controller
 {
 
     /**
-     * Matches /segment/*
+     * Matches /trademark/*
      *
-     * @Route("/segment/{id}", name="segment_get")
+     * @Route("/trademark/{id}", name="trademark_get")
      * @Method("GET")
      *
      * @param integer $id
@@ -25,18 +25,18 @@ class TrademarkController extends Controller
      */
     public function readAction($id)
     {
-        /** @var Segment $segment */
-        $segment = $this->get('doctrine')
-            ->getRepository('SettingsBundle:Segment')
+        /** @var Trademark $trademark */
+        $trademark = $this->get('doctrine')
+            ->getRepository('SettingsBundle:Trademark')
             ->find((int)$id);
 
-        return $this->json($segment);
+        return $this->json($trademark);
     }
 
     /**
-     * Matches /segment
+     * Matches /trademark
      *
-     * @Route("/segment", name="segment_list")
+     * @Route("/trademark", name="trademark_list")
      * @Method("GET")
      *
      * @param Request $request
@@ -45,27 +45,27 @@ class TrademarkController extends Controller
     public function getListAction(Request $request) {
         $responseData = [];
 
-        $segmentList = $this->get('doctrine')
-            ->getRepository('SettingsBundle:Segment')
+        $trademarkList = $this->get('doctrine')
+            ->getRepository('SettingsBundle:Trademark')
             ->findAll();;
 
-        /** @var Segment $segment */
-        foreach($segmentList as $segment) {
-            $segmentData['id']      = $segment->getId();
-            $segmentData['name']    = $segment->getName();
-            $segmentData['created_by'] = $segment->getCreatedByUser()->getFirstName();
-            $segmentData['dt_created'] = $segment->getDtCreated()->format('d.m.Y H:i:s');
+        /** @var Trademark $trademark */
+        foreach($trademarkList as $trademark) {
+            $trademarkData['id']      = $trademark->getId();
+            $trademarkData['name']    = $trademark->getName();
+            $trademarkData['created_by'] = $trademark->getCreatedByUser()->getFirstName();
+            $trademarkData['dt_created'] = $trademark->getDtCreated()->format('d.m.Y H:i:s');
 
-            $responseData[] = $segmentData;
+            $responseData[] = $trademarkData;
         }
 
         return $this->json(array('success' => true, 'count' => count($responseData), 'data' => $responseData));
     }
 
     /**
-     * Matches /segment
+     * Matches /trademark
      *
-     * @Route("/segment", name="segment_create")
+     * @Route("/trademark", name="trademark_create")
      * @Method("POST")
      *
      * @param Request $request
@@ -76,33 +76,33 @@ class TrademarkController extends Controller
         /** @var User $user */
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $segment = $this->get('doctrine')
-            ->getRepository('SettingsBundle:Segment')
+        $trademark = $this->get('doctrine')
+            ->getRepository('SettingsBundle:Trademark')
             ->find((int)$request->get('id'));
 
-        /** @var Segment $segment */
-        $segment->setName($request->get('name'))
+        /** @var Trademark $trademark */
+        $trademark->setName($request->get('name'))
                 ->setCreatedByUser($user)
                 ->setDtCreated(new \DateTime())
                 ->setModifiedByUser($user)
                 ->setDtModified(new \DateTime());
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($segment);
+        $em->persist($trademark);
         $em->flush();
 
         return $this->json(
             array(
-                'success' => !empty($segment->getId()) ? true : false,
-                'id'      => $segment->getId()
+                'success' => !empty($trademark->getId()) ? true : false,
+                'id'      => $trademark->getId()
             )
         );
     }
 
     /**
-     * Matches /segment/*
+     * Matches /trademark/*
      *
-     * @Route("/segment/{id}", name="segment_update")
+     * @Route("/trademark/{id}", name="trademark_update")
      * @Method("PUT")
      *
      * @param Request $request
@@ -113,23 +113,29 @@ class TrademarkController extends Controller
         /** @var User $user */
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $segment = $this->get('doctrine')
-            ->getRepository('SettingsBundle:Segment')
+        /** @var Trademark $trademark */
+        $trademark = $this->get('doctrine')
+            ->getRepository('SettingsBundle:Trademark')
             ->find((int)$request->get('id'));
 
-        /** @var Segment $segment */
-        $segment->setName($request->get('name'))
+        $organizationUnit = $this->get('doctrine')
+        ->getRepository('AppBundle:OrganizationUnit')
+        ->find((int)$request->get('organization_unit_id'));
+
+
+        $trademark->setName($request->get('name'))
                 ->setModifiedByUser($user)
-                ->setDtModified(new \DateTime());
+                ->setDtModified(new \DateTime())
+                ->setOrganizationUnit($organizationUnit);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($segment);
+        $em->persist($trademark);
         $em->flush();
 
         return $this->json(
             array(
-                'success' => !empty($segment->getId()) ? true : false,
-                'id'      => $segment->getId()
+                'success' => !empty($trademark->getId()) ? true : false,
+                'id'      => $trademark->getId()
             )
         );
     }

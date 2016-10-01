@@ -35,4 +35,60 @@ class Trademark extends AbstractEntity
      */
     protected $organizationUnitId;
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return Trademark
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrganizationUnit()
+    {
+        return $this->organizationUnit;
+    }
+
+    /**
+     * @param mixed $organizationUnit
+     * @return Trademark
+     */
+    public function setOrganizationUnit($organizationUnit)
+    {
+        $this->organizationUnit = $organizationUnit;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrganizationUnitId()
+    {
+        return $this->organizationUnitId;
+    }
+
+    /**
+     * @param int $organizationUnitId
+     * @return Trademark
+     */
+    public function setOrganizationUnitId($organizationUnitId)
+    {
+        $this->organizationUnitId = $organizationUnitId;
+        return $this;
+    }
+
+
+
 }
