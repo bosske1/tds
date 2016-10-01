@@ -131,5 +131,11 @@ Tds.Views.Modal = Backbone.View.extend({
 
     onViewSave : function() {
         this.getView().trigger('saveEvent');
+    },
+
+    showError : function (error) {
+        var me = this;
+        $('.alert-danger .errorText').html(error);
+        $('.alert-danger').show();
     }
 });

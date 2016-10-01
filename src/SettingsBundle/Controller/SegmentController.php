@@ -76,9 +76,7 @@ class SegmentController extends Controller
         /** @var User $user */
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $segment = $this->get('doctrine')
-            ->getRepository('SettingsBundle:Segment')
-            ->find((int)$request->get('id'));
+        $segment = new Segment();
 
         /** @var Segment $segment */
         $segment->setName($request->get('name'))
