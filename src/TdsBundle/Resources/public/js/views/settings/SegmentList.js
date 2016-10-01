@@ -1,11 +1,12 @@
-Tds.Views.SetSegments = Backbone.View.extend({
+Tds.Views.SegmentList = Backbone.View.extend({
 
     initialize: function() {
         this.template= _.template($('#tpl-set-segments').html());
     },
 
     events: {
-        'click #create-segment-button'  : 'createSegment'
+        'click #create-segment-button'  : 'createSegment',
+        'click .edit-segment'           : 'editSegment'
     },
 
     render: function() {
@@ -50,7 +51,7 @@ Tds.Views.SetSegments = Backbone.View.extend({
                     "<td>"+model.get('created_by')+"</td>"+
                     "<td>"+model.get('dt_created')+"</td>"+
                     "<td>" +
-                        "<span><a href='#settings/segment/edit/"+ model.get('id') + "' class='fa fa-fw fa-edit'></a></span>" +
+                        "<span><a data-segment-id='"+model.get('id')+"' class='fa fa-fw fa-edit edit-segment'></a></span>" +
                     "</td>"+
                 "</tr>";
         });
@@ -61,11 +62,41 @@ Tds.Views.SetSegments = Backbone.View.extend({
     },
 
     createSegment: function () {
+        var segmentView = new Tds.Views.Segment();
+        segmentView.setModel(new Tds.Models.Segment);
+
         Tds.getView('Modal').setMainContainer('main-container')
             .setTitle('Create segment')
             .setSaveTitle('Save')
             .setCloseTitle('Cancel')
-            .setView(new Tds.Views.Segment())
+            .setView(segmentView)
             .show();
+    },
+
+    editSegment: function(ev) {
+        var me = this,
+            segmentId = $(ev.currentTarget).data('segment-id'),
+            segmentView  = new Tds.Views.Segment(),
+            segmentModel = new Tds.Models.Segment();
+
+        segmentModel.fetch({
+            url: '/segment/' + segmentId,
+            success: function (model, response, options) {
+                segmentView.setIsEditView(true)
+                    .setModel(model)
+                    .setSegmentId(segmentId);
+
+                Tds.getView('Modal').setMainContainer('main-container')
+                    .setTitle('Edit segment')
+                    .setSaveTitle('Save')
+                    .setCloseTitle('Cancel')
+                    .setView(segmentView)
+                    .show();
+            },
+            error: function (collection, response, options) {
+
+                //create error handler...
+            }
+        });
     }
 });

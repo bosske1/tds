@@ -47,7 +47,7 @@ class SegmentController extends Controller
 
         $segmentList = $this->get('doctrine')
             ->getRepository('SettingsBundle:Segment')
-            ->findAll();;
+            ->findAll();
 
         /** @var Segment $segment */
         foreach($segmentList as $segment) {
@@ -55,6 +55,10 @@ class SegmentController extends Controller
             $segmentData['name']    = $segment->getName();
             $segmentData['created_by'] = $segment->getCreatedByUser()->getFirstName();
             $segmentData['dt_created'] = $segment->getDtCreated()->format('d.m.Y H:i:s');
+            $segmentData['modified_by'] = $segment->getModifiedByUser()->getFirstName();
+            $segmentData['organization_unit_id'] = $segment->getOrganizationUnitId();
+            $segmentData['organization_unit_name'] = $segment->getOrganizationUnit()->getName();
+            $segmentData['dt_modified'] = $segment->getDtModified()->format('d.m.Y H:i:s');
 
             $responseData[] = $segmentData;
         }
@@ -75,6 +79,9 @@ class SegmentController extends Controller
     {
         /** @var User $user */
         $user = $this->get('security.token_storage')->getToken()->getUser();
+        $organizationUnit = $this->get('doctrine')
+            ->getRepository('AppBundle:OrganizationUnit')
+            ->find(2);
 
         $segment = new Segment();
 
@@ -83,6 +90,7 @@ class SegmentController extends Controller
                 ->setCreatedByUser($user)
                 ->setDtCreated(new \DateTime())
                 ->setModifiedByUser($user)
+                ->setOrganizationUnit($organizationUnit)
                 ->setDtModified(new \DateTime());
 
         $em = $this->getDoctrine()->getManager();
@@ -110,6 +118,9 @@ class SegmentController extends Controller
     {
         /** @var User $user */
         $user = $this->get('security.token_storage')->getToken()->getUser();
+        $organizationUnit = $this->get('doctrine')
+            ->getRepository('AppBundle:OrganizationUnit')
+            ->find(2);
 
         $segment = $this->get('doctrine')
             ->getRepository('SettingsBundle:Segment')
@@ -117,6 +128,7 @@ class SegmentController extends Controller
 
         /** @var Segment $segment */
         $segment->setName($request->get('name'))
+                ->setOrganizationUnit($organizationUnit)
                 ->setModifiedByUser($user)
                 ->setDtModified(new \DateTime());
 

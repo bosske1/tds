@@ -2,8 +2,9 @@
 
 namespace SettingsBundle\Entity;
 
+use AppBundle\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
-use TdsBundle\Entity\User;
+use AppBundle\Entity\OrganizationUnit;
 
 /**
  * Segment
@@ -11,16 +12,8 @@ use TdsBundle\Entity\User;
  * @ORM\Table(name="segment")
  * @ORM\Entity(repositoryClass="SettingsBundle\Repository\SegmentRepository")
  */
-class Segment
+class Segment extends AbstractEntity
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var string
@@ -30,54 +23,17 @@ class Segment
     private $name;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="created_by", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\OrganizationUnit")
+     * @ORM\JoinColumn(name="organization_unit_id", referencedColumnName="id")
      */
-    private $createdBy;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="TdsBundle\Entity\User")
-     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
-     */
-    private $createdByUser;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="dt_created", type="datetime")
-     */
-    private $dtCreated;
+    protected $organizationUnit;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="modified_by", type="integer")
+     * @ORM\Column(name="organization_unit_id", type="integer")
      */
-    private $modifiedBy;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="TdsBundle\Entity\User")
-     * @ORM\JoinColumn(name="modified_by", referencedColumnName="id")
-     */
-    private $modifiedByUser;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="dt_modified", type="datetime")
-     */
-    private $dtModified;
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+    protected $organizationUnitId;
 
     /**
      * Set name
@@ -104,124 +60,38 @@ class Segment
     }
 
     /**
-     * Set dtCreated
-     *
-     * @param \DateTime $dtCreated
-     *
-     * @return Segment
-     */
-    public function setDtCreated($dtCreated)
-    {
-        $this->dtCreated = $dtCreated;
-
-        if(isset($this->dtCreated)){
-            $this->dtCreated = new \DateTime();
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get dtCreated
-     *
-     * @return \DateTime
-     */
-    public function getDtCreated()
-    {
-        return $this->dtCreated;
-    }
-
-    /**
-     * Set createdBy
-     *
-     * @param integer $createdBy
-     *
-     * @return Segment
-     */
-    public function setCreatedBy($createdBy)
-    {
-        $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
-    /**
-     * Get createdBy
-     *
-     * @return int
-     */
-    public function getCreatedBy()
-    {
-        return $this->createdBy;
-    }
-
-    /**
-     * @param User $user
-     * @return Segment
-     */
-    public function setCreatedByUser(User $user)
-    {
-        $this->createdByUser = $user;
-
-        return $this;
-    }
-
-    /**
      * @return mixed
      */
-    public function getCreatedByUser()
+    public function getOrganizationUnit()
     {
-        return $this->createdByUser;
+        return $this->organizationUnit;
     }
 
     /**
-     * @return \DateTime
+     * @param mixed $organizationUnit
+     * @return Trademark
      */
-    public function getDtModified()
+    public function setOrganizationUnit($organizationUnit)
     {
-        return $this->dtModified;
-    }
-
-    /**
-     * @param \DateTime $dtModified
-     */
-    public function setDtModified($dtModified)
-    {
-        $this->dtModified = $dtModified;
+        $this->organizationUnit = $organizationUnit;
+        return $this;
     }
 
     /**
      * @return int
      */
-    public function getModifiedBy()
+    public function getOrganizationUnitId()
     {
-        return $this->modifiedBy;
+        return $this->organizationUnitId;
     }
 
     /**
-     * @param int $modifiedBy
+     * @param int $organizationUnitId
+     * @return Trademark
      */
-    public function setModifiedBy($modifiedBy)
+    public function setOrganizationUnitId($organizationUnitId)
     {
-        $this->modifiedBy = $modifiedBy;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getModifiedByUser()
-    {
-        return $this->modifiedByUser;
-    }
-
-    /**
-     * @param User $user
-     * @return Segment
-     */
-    public function setModifiedByUser(User $user)
-    {
-        $this->modifiedByUser = $user;
-
+        $this->organizationUnitId = $organizationUnitId;
         return $this;
     }
 }

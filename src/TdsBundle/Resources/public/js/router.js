@@ -4,8 +4,7 @@ Tds.Router = Backbone.Router.extend({
         ''              : 'dashboard',
         'dashboard'     : 'dashboard',
 
-        'settings/segments'         : 'setSegments',
-        'settings/segment/create'   : 'createSegment',
+        'settings/segments'         : 'segmentList',
         'settings/segment/edit/:id' : 'editSegment',
 
         'settings/productStatuses'  : 'setProductStatuses',
@@ -74,37 +73,14 @@ Tds.Router = Backbone.Router.extend({
         });
     },
 
-    setSegments: function() {
-        var setSegmentsView = new Tds.Views.SetSegments();
+    segmentList: function() {
+        var segmentListView = new Tds.Views.SegmentList();
 
-        Tds.renderView(setSegmentsView);
-    },
-
-    createSegment: function () {
-        var createSegmentView = new Tds.Views.Segment();
-
-        Tds.renderView(createSegmentView);
+        Tds.renderView(segmentListView);
     },
 
     editSegment: function (id) {
-        var me = this,
-            segmentView  = new Tds.Views.Segment(),
-            segmentModel = new Tds.Models.Segment();
 
-        segmentModel.fetch({
-            url: '/segment/' + id,
-            success: function (model, response, options) {
-                segmentView.setIsEditView(true)
-                    .setModel(model)
-                    .setSegmentId(id);
-
-                Tds.renderView(segmentView);
-            },
-            error: function (collection, response, options) {
-
-                //create error handler...
-            }
-        });
     },
 
     setProductStatuses: function() {

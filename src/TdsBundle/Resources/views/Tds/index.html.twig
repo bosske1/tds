@@ -17,7 +17,7 @@
                 {% include 'TdsBundle:Tds:templates/settings/setLabels.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/settings/setLang.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/settings/setPrefixes.html.twig' %}
-                {% include 'TdsBundle:Tds:templates/settings/setSegments.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/settings/segmentList.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/settings/segment.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/settings/setProductStatuses.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/settings/productStatuses.html.twig' %}
@@ -47,7 +47,7 @@
                     '@TdsBundle/Resources/public/js/views/View.js'
                     '@TdsBundle/Resources/public/js/views/Modal.js'
                     '@TdsBundle/Resources/public/js/views/Navigation.js'
-                    '@TdsBundle/Resources/public/js/views/settings/SetSegments.js'
+                    '@TdsBundle/Resources/public/js/views/settings/SegmentList.js'
                     '@TdsBundle/Resources/public/js/views/settings/Segment.js'
                     '@TdsBundle/Resources/public/js/views/settings/SetProductStatuses.js'
                     '@TdsBundle/Resources/public/js/views/settings/ProductStatuses.js'
@@ -66,10 +66,12 @@
                     '@TdsBundle/Resources/public/js/models/settings/ProductStatus.js'
                     '@TdsBundle/Resources/public/js/models/tds/Tds.js'
                     '@TdsBundle/Resources/public/js/models/Navigation.js'
+                    '@TdsBundle/Resources/public/js/models/OrganizationUnit.js'
                     '@TdsBundle/Resources/public/js/collections/settings/Segment.js'
                     '@TdsBundle/Resources/public/js/collections/settings/ProductStatus.js'
                     '@TdsBundle/Resources/public/js/collections/tds/Tds.js'
                     '@TdsBundle/Resources/public/js/collections/Navigation.js'
+                    '@TdsBundle/Resources/public/js/collections/OrganizationUnit.js'
                     '@TdsBundle/Resources/public/js/parser/TdsHtmlToJson.js'
                     '@TdsBundle/Resources/public/js/parser/TdsJsonToHtml.js'
                 %}

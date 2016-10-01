@@ -15,11 +15,14 @@ Tds.Views.Segment = Backbone.View.extend({
     },
 
     initialize: function() {
-        this.template= _.template($('#tpl-segment').html());
+        this.template = _.template($('#tpl-segment').html());
     },
 
     render: function() {
-        var html = this.template();
+        var html = this.template({
+            'model': this.getModel(),
+            'organizationUnitCollection': this.getOrganizationUnitCollection()
+        });
         this.$el.html(html);
 
         this.postRender();
@@ -70,10 +73,26 @@ Tds.Views.Segment = Backbone.View.extend({
         return this.isEditView;
     },
 
+    getSaveUrl: function() {
+        if(this.getIsEditView() && this.getSegmentId() != null){
+            return '/segment/' + this.getSegmentId();
+        } else {
+            return '/segment';
+        }
+    },
+
+    getOrganizationUnitCollection: function() {
+        var organizationUnitCollection = new Tds.Collections.OrganizationUnit;
+        organizationUnitCollection.fetch();
+
+        return organizationUnitCollection.toJSON();
+    },
+
     onSave: function () {
         var me = this,
-            router = new Tds.Router();
-        var data = {};
+            router = new Tds.Router(),
+            segment = this.getModel(),
+            data = {};
 
         if(!Tds.getHelper('View').checkMandatoryFields('segment-form')) {
             Tds.getView('Modal').showError('Check mandatory fields!');
@@ -85,9 +104,9 @@ Tds.Views.Segment = Backbone.View.extend({
             data[item] = $('#' + item).val();
         });
 
-        var segment = new Tds.Models.Segment(data);
-
+        segment.set(data);
         segment.save(null, {
+            url: me.getSaveUrl(),
             success: function (model, response) {
                 Tds.getView('Modal').hide();
                 Backbone.history.navigate('settings/segments');
