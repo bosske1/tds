@@ -6,6 +6,10 @@ Tds.Views.Segment = Backbone.View.extend({
 
     model: null,
 
+    toPostFormData: [
+        'name'
+    ],
+
     events: {
 
     },
@@ -67,6 +71,31 @@ Tds.Views.Segment = Backbone.View.extend({
     },
 
     onSave: function () {
-        alert('radi');
+        var me = this,
+            router = new Tds.Router();
+        var data = {};
+
+        if(!Tds.getHelper('View').checkMandatoryFields('segment-form')) {
+            Tds.getView('Modal').showError('Check mandatory fields!');
+
+            return false;
+        }
+
+        $.each(me.toPostFormData, function(index, item) {
+            data[item] = $('#' + item).val();
+        });
+
+        var segment = new Tds.Models.Segment(data);
+
+        segment.save(null, {
+            success: function (model, response) {
+                Tds.getView('Modal').hide();
+                Backbone.history.navigate('settings/segments');
+                window.location.reload();
+            },
+            error: function (model, response) {
+                Tds.getView('Modal').showError('Error occurred!');
+            }
+        });
     }
 });
