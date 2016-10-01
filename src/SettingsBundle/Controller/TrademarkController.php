@@ -2,6 +2,7 @@
 
 namespace SettingsBundle\Controller;
 
+use AppBundle\Entity\OrganizationUnit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -76,15 +77,23 @@ class TrademarkController extends Controller
         /** @var User $user */
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
+        /** @var Trademark $trademark */
         $trademark = $this->get('doctrine')
             ->getRepository('SettingsBundle:Trademark')
             ->find((int)$request->get('id'));
 
-        /** @var Trademark $trademark */
+        /**
+         * @var OrganizationUnit $organizationUnit
+         */
+        $organizationUnit = $this->get('doctrine')
+            ->getRepository('AppBundle:OrganizationUnit')
+            ->find((int)$request->get('organization_unit_id'));
+
         $trademark->setName($request->get('name'))
                 ->setCreatedByUser($user)
                 ->setDtCreated(new \DateTime())
                 ->setModifiedByUser($user)
+                ->setOrganizationUnit($organizationUnit)
                 ->setDtModified(new \DateTime());
 
         $em = $this->getDoctrine()->getManager();

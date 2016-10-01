@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\OrganizationUnit;
 
 /**
- * Segment
+ * Trademark
  *
  * @ORM\Table(name="trademark")
  * @ORM\Entity(repositoryClass="SettingsBundle\Repository\TrademarkRepository")
@@ -23,6 +23,9 @@ class Trademark extends AbstractEntity
     protected $name;
 
     /**
+     *
+     * @var OrganizationUnit
+     *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\OrganizationUnit")
      * @ORM\JoinColumn(name="organization_unit_id", referencedColumnName="id")
      */
@@ -54,7 +57,7 @@ class Trademark extends AbstractEntity
     }
 
     /**
-     * @return mixed
+     * @return OrganizationUnit
      */
     public function getOrganizationUnit()
     {
@@ -62,10 +65,10 @@ class Trademark extends AbstractEntity
     }
 
     /**
-     * @param mixed $organizationUnit
+     * @param OrganizationUnit $organizationUnit
      * @return Trademark
      */
-    public function setOrganizationUnit($organizationUnit)
+    public function setOrganizationUnit(OrganizationUnit $organizationUnit)
     {
         $this->organizationUnit = $organizationUnit;
         return $this;
