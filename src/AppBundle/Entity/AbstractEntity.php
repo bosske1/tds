@@ -27,7 +27,7 @@ abstract class AbstractEntity
 	protected $createdBy;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="TdsBundle\Entity\User")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
 	 * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
 	 */
 	protected $createdByUser;
@@ -47,7 +47,7 @@ abstract class AbstractEntity
 	protected $modifiedBy;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="TdsBundle\Entity\User")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
 	 * @ORM\JoinColumn(name="modified_by", referencedColumnName="id")
 	 */
 	protected $modifiedByUser;

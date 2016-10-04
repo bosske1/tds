@@ -9,7 +9,7 @@ use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use TdsBundle\Entity\Tds;
-use TdsBundle\Entity\User;
+use AppBundle\Entity\User;
 use TdsBundle\Security\TdsVoter;
 
 class TdsController extends Controller

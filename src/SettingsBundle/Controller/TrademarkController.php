@@ -10,7 +10,7 @@ use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use SettingsBundle\Entity\Trademark;
-use TdsBundle\Entity\User;
+use AppBundle\Entity\User;
 
 class TrademarkController extends Controller
 {

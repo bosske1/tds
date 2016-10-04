@@ -48,8 +48,8 @@ Tds.Views.SegmentList = Backbone.View.extend({
             tableContentText +=
                 "<tr>"+
                     "<td>"+model.get('name')+"</td>"+
-                    "<td>"+model.get('created_by')+"</td>"+
-                    "<td>"+model.get('dt_created')+"</td>"+
+                    "<td>"+model.get('createdBy')+"</td>"+
+                    "<td>"+model.get('dtCreated')+"</td>"+
                     "<td>" +
                         "<span><a data-segment-id='"+model.get('id')+"' class='fa fa-fw fa-edit edit-segment'></a></span>" +
                     "</td>"+

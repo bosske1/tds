@@ -3,7 +3,7 @@
 namespace SettingsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use TdsBundle\Entity\User;
+use AppBundle\Entity\User;
 
 /**
  * ProductStatus
@@ -37,7 +37,7 @@ class ProductStatus
     private $createdBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TdsBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
     private $createdByUser;
@@ -57,7 +57,7 @@ class ProductStatus
     private $modifiedBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TdsBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="modified_by", referencedColumnName="id")
      */
     private $modifiedByUser;

@@ -78,6 +78,10 @@ Tds.Views.Modal = Backbone.View.extend({
         this.removeView();
         this.render();
 
+        if(typeof this.getView().afterRender != 'undefined') {
+            this.getView().afterRender();
+        }
+
         $(this.modalId).modal('show');
 
         return false;
@@ -137,5 +141,21 @@ Tds.Views.Modal = Backbone.View.extend({
         var me = this;
         $('.alert-danger .errorText').html(error);
         $('.alert-danger').show();
+        $('.alert-danger .dismiss-alert-danger').bind('click', function(){
+            me.dismissError();
+        });
+    },
+
+    hideError : function() {
+        $('.alert-danger').hide();
+    },
+
+    dismissError : function() {
+        this.hideError();
+        this.clearError();
+    },
+
+    clearError : function() {
+        $('.alert-danger .errorText').html('');
     }
 });

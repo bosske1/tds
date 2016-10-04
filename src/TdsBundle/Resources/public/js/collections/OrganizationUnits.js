@@ -1,4 +1,4 @@
-Tds.Collections.OrganizationUnit = Backbone.Collection.extend({
+Tds.Collections.OrganizationUnits = Backbone.Collection.extend({
     model: Tds.Models.OrganizationUnit,
     url: '/organizationunit',
 

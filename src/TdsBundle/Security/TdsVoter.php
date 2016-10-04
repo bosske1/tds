@@ -5,7 +5,7 @@ namespace TdsBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use TdsBundle\Entity\Tds;
-use TdsBundle\Entity\User;
+use AppBundle\Entity\User;
 use TdsBundle\Repository\TdsRepository;
 
 class TdsVoter extends Voter

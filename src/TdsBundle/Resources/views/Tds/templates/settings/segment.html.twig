@@ -8,12 +8,7 @@
 
         <div class="form-group">
             <label>Organization unit</label>
-            <select class="form-control mandatory">
-                <option>1</option>
-
-                <% organizationUnitCollection.each(function(organizationUnit) { %>
-                <option value="<% organizationUnit.get('id') %>"><% organizationUnit.get('name') %></option>
-                <% }); %>
+            <select id="organizationUnitId" class="form-control mandatory">
             </select>
         </div>
     </form>

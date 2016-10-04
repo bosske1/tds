@@ -49,7 +49,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
         // if null, authentication will fail
         // if a User object, checkCredentials() is called
-        return $this->entityManager->getRepository('TdsBundle:User')
+        return $this->entityManager->getRepository('AppBundle:User')
             ->findOneBy(array('firstName' => $apiKey));
     }
 

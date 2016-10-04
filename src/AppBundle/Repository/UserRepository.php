@@ -1,6 +1,6 @@
 <?php
 
-namespace TdsBundle\Repository;
+namespace AppBundle\Repository;
 
 /**
  * UserRepository

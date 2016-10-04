@@ -9,7 +9,7 @@ use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use SettingsBundle\Entity\Segment;
-use TdsBundle\Entity\User;
+use AppBundle\Entity\User;
 
 class SegmentController extends Controller
 {
@@ -49,21 +49,7 @@ class SegmentController extends Controller
             ->getRepository('SettingsBundle:Segment')
             ->findAll();
 
-        /** @var Segment $segment */
-        foreach($segmentList as $segment) {
-            $segmentData['id']      = $segment->getId();
-            $segmentData['name']    = $segment->getName();
-            $segmentData['created_by'] = $segment->getCreatedByUser()->getFirstName();
-            $segmentData['dt_created'] = $segment->getDtCreated()->format('d.m.Y H:i:s');
-            $segmentData['modified_by'] = $segment->getModifiedByUser()->getFirstName();
-            $segmentData['organization_unit_id'] = $segment->getOrganizationUnitId();
-            $segmentData['organization_unit_name'] = $segment->getOrganizationUnit()->getName();
-            $segmentData['dt_modified'] = $segment->getDtModified()->format('d.m.Y H:i:s');
-
-            $responseData[] = $segmentData;
-        }
-
-        return $this->json(array('success' => true, 'count' => count($responseData), 'data' => $responseData));
+        return $this->json(array('success' => true, 'count' => count($segmentList), 'data' => $segmentList));
     }
 
     /**
@@ -81,7 +67,7 @@ class SegmentController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $organizationUnit = $this->get('doctrine')
             ->getRepository('AppBundle:OrganizationUnit')
-            ->find(2);
+            ->find($request->get('organizationUnitId'));
 
         $segment = new Segment();
 
@@ -120,7 +106,7 @@ class SegmentController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $organizationUnit = $this->get('doctrine')
             ->getRepository('AppBundle:OrganizationUnit')
-            ->find(2);
+            ->find($request->get('organizationUnitId'));
 
         $segment = $this->get('doctrine')
             ->getRepository('SettingsBundle:Segment')

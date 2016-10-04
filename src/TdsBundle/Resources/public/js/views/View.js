@@ -116,5 +116,27 @@ Tds.Helpers.View = {
         var fieldType = $(fieldElement).attr('type');
 
         return fieldType;
+    },
+
+    populateSelect: function(selectFieldId, collection, selectedValue) {
+        var selectField = this.getView().$('#' + selectFieldId);
+        selectField = this.getView().$(selectField.get(0));
+
+        selectField.find('option').remove();
+
+        var option = $("<option></option>").text('---').val('');
+        option.appendTo(selectField);
+
+        $.each(collection.models, function(index, item) {
+            if(selectedValue == item.get('id')) {
+                var option = $("<option selected></option>").text(item.get('name')).val(item.get('id'));
+            } else {
+                var option = $("<option></option>").text(item.get('name')).val(item.get('id'));
+            }
+
+            option.appendTo(selectField);
+        });
+
+        return this;
     }
 };

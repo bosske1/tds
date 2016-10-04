@@ -36,7 +36,7 @@ class Tds
     private $createdBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
     private $createdByUser;
@@ -56,7 +56,7 @@ class Tds
     private $modifiedBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TdsBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="modified_by", referencedColumnName="id")
      */
     private $modifiedByUser;

@@ -7,7 +7,8 @@ Tds.Views.Segment = Backbone.View.extend({
     model: null,
 
     toPostFormData: [
-        'name'
+        'name',
+        'organizationUnitId'
     ],
 
     events: {
@@ -20,14 +21,31 @@ Tds.Views.Segment = Backbone.View.extend({
 
     render: function() {
         var html = this.template({
-            'model': this.getModel(),
-            'organizationUnitCollection': this.getOrganizationUnitCollection()
+            'model': this.getModel()
         });
         this.$el.html(html);
 
         this.postRender();
 
         return this;
+    },
+
+    afterRender: function() {
+        this.initSelects();
+    },
+
+    initSelects: function() {
+        var me = this;
+
+        Tds.getService('CollectionDataContainer').clear('OrganizationUnits').get('OrganizationUnits', {
+            success: function(collection, response) {
+                if (collection) {
+                    Tds.getHelper('View').setView(me).populateSelect('organizationUnitId', collection, me.model.get('organizationUnitId'));
+                } else {
+                    alert('Error fetching organization units');
+                }
+            }
+        });
     },
 
     bindEvents: function() {
@@ -79,13 +97,6 @@ Tds.Views.Segment = Backbone.View.extend({
         } else {
             return '/segment';
         }
-    },
-
-    getOrganizationUnitCollection: function() {
-        var organizationUnitCollection = new Tds.Collections.OrganizationUnit;
-        organizationUnitCollection.fetch();
-
-        return organizationUnitCollection.toJSON();
     },
 
     onSave: function () {

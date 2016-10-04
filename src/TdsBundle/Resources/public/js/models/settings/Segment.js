@@ -4,13 +4,13 @@ Tds.Models.Segment = Backbone.Model.extend({
 
     defaults: {
         id: null,
-        created_by: null,
-        dt_created: null,
-        modified_by: null,
-        dt_modified: null,
+        createdBy: null,
+        dtCreated: null,
+        modifiedBy: null,
+        dtModified: null,
         name: null,
-        organization_unit_id: null,
-        organization_unit_name: null
+        organizationUnitId: null,
+        organizationUnitName: null
     },
 
     initialize: function() {
