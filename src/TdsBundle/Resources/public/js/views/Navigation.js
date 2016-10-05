@@ -56,7 +56,7 @@ Tds.Views.Navigation = Backbone.View.extend({
                 }
 
                 element += item.label + '</a>';
-                element += '<a style="display: inline;" href="#tds/searchAdd" style="z-index: 10; float: right;" id="edit-search-menu" class="fa fa-plus"></a></li>';
+                element += '<a style="display: inline;" href="#tds/filter/add" style="z-index: 10; float: right;" id="edit-search-menu" class="fa fa-plus"></a></li>';
 
             } else {
                 element += '<li'+((item.active==true)?' class="active"':'')+'>';
@@ -77,7 +77,7 @@ Tds.Views.Navigation = Backbone.View.extend({
                 element += item.label;
                 element += me.getIconElement('fa fa-fw fa-caret-down');
                 element += '</a>';
-                element += '<a style="display: inline;" href="#tds/searchAdd" style="z-index: 10; float: right;" id="edit-search-menu" class="fa fa-plus"></a>';
+                element += '<a style="display: inline;" href="#tds/filter/add" style="z-index: 10; float: right;" id="edit-search-menu" class="fa fa-plus"></a>';
                 element += me.getListElement(item);
                 element += '</li>';
             } else {

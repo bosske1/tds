@@ -1,10 +1,12 @@
-/**
- * Created by bojanic on 13.9.16..
- */
-Tds.Views.SearchAddEdit = Backbone.View.extend({
+Tds.Views.FilterList = Backbone.View.extend({
+
+    events: {
+        "click #reset-filter-button": "resetFilters",
+        "click #filter-button": "filterTdsList"
+    },
 
     initialize: function() {
-        this.template= _.template($('#tpl-search-add-edit').html());
+        this.template= _.template($('#tpl-tds-list-filters').html());
     },
 
     render: function() {
@@ -16,23 +18,36 @@ Tds.Views.SearchAddEdit = Backbone.View.extend({
     },
 
     afterRender: function() {
-
-        //render filters
-        var tdsListFilters = new Tds.Views.TdsListFilters({
-
-        });
-        this.$el
-            .find('#filters-container')
-            .html((tdsListFilters).render().$el);
-
-        this.getData();
+        this.datepicker();
     },
 
-    getData: function() {
-        var me = this,
-            collection = new Tds.Collections.Tds;
+    datepicker: function() {
+        this.$('#created').datepicker();
 
+        return this;
+    },
+
+    resetFilters: function(){
+        this.$('#created').val('');
+        this.$('#name').val('');
+
+        //call ajax again to update list
+        return this;
+    },
+
+    filterTdsList: function() {
+        var me = this;
+
+        var created = this.$('#created').val();
+        var name    = this.$('#name').val();
+
+        collection = new Tds.Collections.Tds;
+
+        //set filter object with collected filters
         collection.fetch({
+            data: {
+                dt_created: created,
+                name: name},
             success: function(collection, response){
                 if(collection){
                     me.fillTable(collection);
@@ -41,7 +56,6 @@ Tds.Views.SearchAddEdit = Backbone.View.extend({
                 }
             },
             failure: function(){
-
             }
         });
 
@@ -68,5 +82,6 @@ Tds.Views.SearchAddEdit = Backbone.View.extend({
 
         return this;
     }
+
 
 });

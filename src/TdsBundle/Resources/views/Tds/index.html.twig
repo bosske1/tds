@@ -28,7 +28,7 @@
                 {% include 'TdsBundle:Tds:templates/templates.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/translate.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/search-add-edit.html.twig' %}
-                {% include 'TdsBundle:Tds:templates/filters/tdsListFilters.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/filters/add.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/tds.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/tdsList.html.twig' %}
 
@@ -40,6 +40,10 @@
                     <script type="text/javascript" src="{{ asset('assets/js/backbone/backbone-min.js') }}"></script>
                     <script type="text/javascript" src="{{ asset('assets/js/gridstack/gridstack.min.js') }}"></script>
                     <script type="text/javascript" src="{{ asset('assets/js/tinymce/tinymce.min.js') }}"></script>
+
+                    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+                    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+
                 {% endblock %}
 
                 {% javascripts
@@ -58,8 +62,8 @@
                     '@TdsBundle/Resources/public/js/views/settings/SetLang.js'
                     '@TdsBundle/Resources/public/js/views/settings/SetLabels.js'
                     '@TdsBundle/Resources/public/js/views/settings/SetUnits.js'
-                    '@TdsBundle/Resources/public/js/views/search/SearchAddEdit.js'
-                    '@TdsBundle/Resources/public/js/views/filters/TdsListFilters.js'
+                    '@TdsBundle/Resources/public/js/views/filters/FilterList.js'
+                    '@TdsBundle/Resources/public/js/views/filters/FilterAdd.js'
                     '@TdsBundle/Resources/public/js/views/Templates.js'
                     '@TdsBundle/Resources/public/js/views/Translate.js'
                     '@TdsBundle/Resources/public/js/views/tds/Tds.js'
