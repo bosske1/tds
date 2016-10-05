@@ -132,8 +132,9 @@ Tds.Router = Backbone.Router.extend({
     },
 
     tdsFilterAdd: function() {
-        var tdsSearchAddView = new Tds.Views.FilterAdd();
+        var filterModel = new Tds.Models.Filter(),
+            filterAddView = new Tds.Views.FilterAdd({ model : filterModel });
 
-        Tds.renderView(tdsSearchAddView);
+        Tds.renderView(filterAddView);
     }
 });
