@@ -132,14 +132,14 @@ Tds.Views.Tds = Backbone.View.extend({
     addWidget : function () {
         var grid = this.getGridStackContainer().data('gridstack');
 
-        grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
+        grid.addWidget($('<div data-gs-no-resize="true"><div class="grid-stack-item-content" /><div/>'),
             0, 0, this.fullWidgetWidth, this.widgetHeight);
     },
 
     addHalfWidget : function () {
         var grid = this.getGridStackContainer().data('gridstack');
 
-        grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
+        grid.addWidget($('<div data-gs-no-resize="true"><div class="grid-stack-item-content" /><div/>'),
             0, 0, this.halfWidgetWidth, this.widgetHeight);
     },
 
