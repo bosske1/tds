@@ -84,7 +84,7 @@ class NavigationController extends Controller
             ),
             array(
                 'label'     => 'Search',
-                'link'      => 'list',
+                'link'      => 'filter',
                 'icon'      => 'fa fa-list-ul',
                 'visible'   => true,
                 'children'  => $this->getSearchData()

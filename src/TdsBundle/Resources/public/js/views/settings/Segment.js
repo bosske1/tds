@@ -120,8 +120,7 @@ Tds.Views.Segment = Backbone.View.extend({
             url: me.getSaveUrl(),
             success: function (model, response) {
                 Tds.getView('Modal').hide();
-                Backbone.history.navigate('settings/segments');
-                window.location.reload();
+                this.$('#tds-list').jsGrid('loadData');
             },
             error: function (model, response) {
                 Tds.getView('Modal').showError('Error occurred!');

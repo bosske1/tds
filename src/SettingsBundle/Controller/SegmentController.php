@@ -129,4 +129,34 @@ class SegmentController extends Controller
             )
         );
     }
+
+    /**
+     * Matches /segment/*
+     *
+     * @Route("/segment/{id}", name="segment_delete")
+     * @Method("DELETE")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $segment = $this->get('doctrine')
+            ->getRepository('SettingsBundle:Segment')
+            ->find((int)$id);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($segment);
+        $em->flush();
+
+        return $this->json(
+            array(
+                'success' => true
+            )
+        );
+    }
+
 }
