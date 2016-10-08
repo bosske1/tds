@@ -79,8 +79,8 @@ Tds.Views.TemplateList = Backbone.View.extend({
                     type: "control",
                     cellRenderer: function(value, item) {
                         return '<td class="jsgrid-cell jsgrid-control-field jsgrid-align-center" style="width: 50px;">' +
-                                    '<input class="jsgrid-button jsgrid-edit-button edit-template" data-segment-id="'+item.id + '" type="button" title="Edit">' +
-                                    '<input class="jsgrid-button jsgrid-delete-button delete-template" data-segment-id="'+item.id + '" type="button" title="Delete">' +
+                                    '<input class="jsgrid-button jsgrid-edit-button edit-template" data-template-id="'+item.id + '" type="button" title="Edit">' +
+                                    '<input class="jsgrid-button jsgrid-delete-button delete-template" data-template-id="'+item.id + '" type="button" title="Delete">' +
                                 '</td>';
                     }
                 }
@@ -96,8 +96,12 @@ Tds.Views.TemplateList = Backbone.View.extend({
         router.navigate('/template/create', { trigger : true });
     },
 
-    onEditTemplateButtonClick : function(){
-        alert('edit')
+    onEditTemplateButtonClick : function(ev){
+        var me = this,
+            router = new Tds.Router(),
+            templateId = $(ev.currentTarget).data('template-id');
+
+        router.navigate('/template/edit/' + templateId, { trigger : true });
     },
 
     onDeleteTemplateButtonClick : function(){

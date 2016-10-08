@@ -102,8 +102,9 @@ class TdsController extends Controller
         }
 
         return $this->json(array(
-            'id'   => $id,
-            'data' => json_decode($tds->getData(), true)
+            'id'           => $id,
+            'isTemplate'   => $tds->getIsTemplate(),
+            'data'         => json_decode($tds->getData(), true)
         ));
     }
 
