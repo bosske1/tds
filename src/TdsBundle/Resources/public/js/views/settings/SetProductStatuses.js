@@ -50,8 +50,22 @@ Tds.Views.SetProductStatuses = Backbone.View.extend({
 
             sorting: true,
             paging: true,
+            autoload: true,
 
-            data: collection.toJSON(),
+            controller: {
+                loadData: function() {
+                    var d = $.Deferred();
+
+                    $.ajax({
+                        url: "/productStatus",
+                        dataType: "json"
+                    }).done(function(response) {
+                        d.resolve(response.data);
+                    });
+
+                    return d.promise();
+                }
+            },
 
             fields: [
                 {
@@ -100,12 +114,45 @@ Tds.Views.SetProductStatuses = Backbone.View.extend({
             .show();
     },
 
-    editProductStatus: function(){
-        alert('edit');
+    editProductStatus: function(ev){
+        var me = this,
+            productStatusId = $(ev.currentTarget).data('product-status-id'),
+            productStatusView  = new Tds.Views.ProductStatuses(),
+            productStatusModel = new Tds.Models.ProductStatus();
+
+        productStatusModel.fetch({
+            url: '/productStatus/' + productStatusId,
+            success: function (model, response, options) {
+                productStatusView.setIsEditView(true)
+                    .setModel(model)
+                    .setProductStatusId(productStatusId);
+
+                Tds.getView('Modal').setMainContainer('main-container')
+                    .setTitle('Edit Product Status')
+                    .setSaveTitle('Save')
+                    .setCloseTitle('Cancel')
+                    .setView(productStatusView)
+                    .show();
+            },
+            error: function (collection, response, options) {
+
+                alert('ERROR!!')
+                //create error handler...
+            }
+        });
     },
 
-    deleteProductStatus: function(){
-        alert('delete');
+    deleteProductStatus: function(ev){
+        var me = this,
+            productStatusId = $(ev.currentTarget).data('product-status-id'),
+            productStatusModel = new Tds.Models.ProductStatus({id: productStatusId});
+
+        productStatusModel.destroy({
+            url: 'productStatus/' + productStatusId,
+            success: function(model, response) {
+                this.$('#product-status-grid').jsGrid('loadData');
+            }
+        });
     }
 
 

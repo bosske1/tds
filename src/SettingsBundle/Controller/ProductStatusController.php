@@ -89,4 +89,72 @@ class ProductStatusController extends Controller
             )
         );
     }
+
+    /**
+     * Matches /productStatus/*
+     *
+     * @Route("/productStatus/{id}", name="productStatus_update")
+     * @Method("PUT")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function updateAction(Request $request)
+    {
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $organizationUnit = $this->get('doctrine')
+            ->getRepository('AppBundle:OrganizationUnit')
+            ->find($request->get('organizationUnitId'));
+
+        $productStatus = $this->get('doctrine')
+            ->getRepository('SettingsBundle:ProductStatus')
+            ->find((int)$request->get('id'));
+
+        /** @var ProductStatus $productStatus */
+        $productStatus->setName($request->get('name'))
+            ->setOrganizationUnit($organizationUnit)
+            ->setModifiedByUser($user)
+            ->setDtModified(new \DateTime());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($productStatus);
+        $em->flush();
+
+        return $this->json(
+            array(
+                'success' => !empty($productStatus->getId()) ? true : false,
+                'id'      => $productStatus->getId()
+            )
+        );
+    }
+
+    /**
+     * Matches /productStatus/*
+     *
+     * @Route("/productStatus/{id}", name="productStatus_delete")
+     * @Method("DELETE")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $productStatus = $this->get('doctrine')
+            ->getRepository('SettingsBundle:ProductStatus')
+            ->find((int)$id);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($productStatus);
+        $em->flush();
+
+        return $this->json(
+            array(
+                'success' => true
+            )
+        );
+    }
 }

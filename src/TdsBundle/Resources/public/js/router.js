@@ -8,6 +8,8 @@ Tds.Router = Backbone.Router.extend({
         'settings/segment/edit/:id' : 'editSegment',
 
         'settings/productStatuses'  : 'setProductStatuses',
+        'settings/productStatus/edit/:id' : 'editProductStatus',
+
         'settings/trademarks'       : 'setTrademarks',
         'settings/prefixes'         : 'setPrefixes',
         'settings/lang'             : 'setLang',
@@ -80,6 +82,10 @@ Tds.Router = Backbone.Router.extend({
     },
 
     editSegment: function (id) {
+
+    },
+
+    editProductStatus: function(id){
 
     },
 
