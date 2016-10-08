@@ -116,8 +116,7 @@ Tds.Views.ProductStatuses = Backbone.View.extend({
             url: me.getSaveUrl(),
             success: function (model, response) {
                 Tds.getView('Modal').hide();
-                Backbone.history.navigate('settings/productStatus');
-                window.location.reload();
+                this.$('#product-status-grid').jsGrid('loadData');
             },
             error: function (model, response) {
                 Tds.getView('Modal').showError('Error occurred!');
@@ -126,8 +125,8 @@ Tds.Views.ProductStatuses = Backbone.View.extend({
     },
 
     getSaveUrl: function() {
-        if(this.getIsEditView() && this.setProductStatusId() != null){
-            return '/productStatus/' + this.setProductStatusId();
+        if(this.getIsEditView() && this.getProductStatusId() != null){
+            return '/productStatus/' + this.getProductStatusId();
         } else {
             return '/productStatus';
         }
