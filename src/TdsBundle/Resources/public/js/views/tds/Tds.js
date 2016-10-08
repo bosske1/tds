@@ -6,10 +6,16 @@ Tds.Views.Tds = Backbone.View.extend({
 
     model : null,
 
+    fullWidgetWidth : 12,
+    halfWidgetWidth : 6,
+
+    widgetHeight    : 4,
+
     events: {
         'click #save-button'    : 'saveTemplate',
         'click #generate-button': 'generateTemplate',
         'click #add-widget-button'              : 'addWidget',
+        'click #add-half-widget-button'         : 'addHalfWidget',
         'mousedown .grid-stack-item-content'    : 'removeWidget', //middle mouse click
         'dblclick .grid-stack-item-content'     : 'showEditorModal'
     },
@@ -127,7 +133,14 @@ Tds.Views.Tds = Backbone.View.extend({
         var grid = this.getGridStackContainer().data('gridstack');
 
         grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
-            1, 1, 2, 2);
+            0, 0, this.fullWidgetWidth, this.widgetHeight);
+    },
+
+    addHalfWidget : function () {
+        var grid = this.getGridStackContainer().data('gridstack');
+
+        grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
+            0, 0, this.halfWidgetWidth, this.widgetHeight);
     },
 
     removeWidget : function (e) {
