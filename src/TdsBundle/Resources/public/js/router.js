@@ -49,12 +49,24 @@ Tds.Router = Backbone.Router.extend({
     tdsCreate: function() {
         var tdsView = new Tds.Views.Tds(),
             tdsModel = new Tds.Models.Tds();
-        
-        //defaults for now like this, until we figure out form where defaults come from...
-        tdsModel.set('data', [{x: 0, y: 0, width: 12, height: 4}]);
-        tdsView.setModel(tdsModel);
 
-        Tds.renderView(tdsView);
+        tdsModel.fetch({
+            url: '/template/fetchTemplateBasedOnUser',
+            success: function (templateModel, response, options) {
+
+                //assign data from template
+                var tdsModel = new Tds.Models.Tds({
+                    'data' : templateModel.get('data')
+                });
+
+                tdsView.setModel(tdsModel);
+                Tds.renderView(tdsView);
+            },
+            error: function (collection, response, options) {
+
+                //create error handler...
+            }
+        });
     },
 
     tdsEdit: function(id) {

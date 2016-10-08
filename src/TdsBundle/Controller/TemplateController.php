@@ -17,7 +17,7 @@ class TemplateController extends Controller
     /**
      * Matches /template/*
      *
-     * @Route("/template/{id}", name="template_get")
+     * @Route("/template/{id}", name="template_get", requirements={"id": "\d+"})
      * @Method("GET")
      */
     public function readAction($id)
@@ -64,5 +64,28 @@ class TemplateController extends Controller
         }
 
         return $this->json(array('success' => true, 'count' => count($responseData), 'data' => $responseData));
+    }
+
+    /**
+     * Matches /template/fetchTemplateBasedOnUser
+     *
+     * @Route("/template/fetchTemplateBasedOnUser", name="template_bre")
+     * @Method("GET")
+     */
+    public function fetchTemplateBasedOnUser()
+    {
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        //for now just return first template
+        /** @var Tds $tds */
+        $tds = $this->get('doctrine')
+            ->getRepository('TdsBundle:Tds')
+            ->findOneBy(array('isTemplate' => 1, 'createdBy' => $user->getId()));
+
+        return $this->json(array(
+            'id'   => $tds->getId(),
+            'data' => json_decode($tds->getData(), true)
+        ));
     }
 }
