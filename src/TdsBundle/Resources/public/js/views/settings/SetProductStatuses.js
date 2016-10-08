@@ -1,7 +1,9 @@
 Tds.Views.SetProductStatuses = Backbone.View.extend({
 
     events: {
-        'click #create-status-button'  : 'createProductStatus'
+        'click #create-status-button'         : 'createProductStatus',
+        'click .edit-product-status'          : 'editProductStatus',
+        'click .delete-product-status'        : "deleteProductStatus"
     },
 
     initialize: function() {
@@ -43,30 +45,67 @@ Tds.Views.SetProductStatuses = Backbone.View.extend({
         var me = this,
             tableContentText = '';
 
-        collection.each(function(model) {
-            tableContentText +=
-                "<tr>"+
-                "<td>"+model.get('name')+"</td>"+
-                "<td>"+model.get('created_by')+"</td>"+
-                "<td>"+model.get('dt_created')+"</td>"+
-                "<td>" +
-                "<span><a href='#settings/productStatuses/edit/"+ model.get('id') + "' class='fa fa-fw fa-edit'></a></span>" +
-                "</td>"+
-                "</tr>";
-        });
+        this.$('#product-status-grid').jsGrid({
+            width: "100%",
 
-        this.$('#product-statuses-table-content').append(tableContentText);
+            sorting: true,
+            paging: true,
+
+            data: collection.toJSON(),
+
+            fields: [
+                {
+                    title: 'Name',
+                    name: "name",
+                    type: "text",
+                    width: 150
+                },
+                {
+                    title: 'Created by',
+                    name: "createdBy",
+                    type: "number",
+                    width: 50
+                },
+                {
+                    title: 'Created',
+                    name: "dtCreated",
+                    type: "date",
+                    width: 200
+                },
+                {
+                    title: 'Menu',
+                    type: "control",
+                    cellRenderer: function(value, item) {
+                        return '<td class="jsgrid-cell jsgrid-control-field jsgrid-align-center" style="width: 50px;">' +
+                            '<input class="jsgrid-button jsgrid-edit-button edit-product-status" data-product-status-id="'+item.id + '" type="button" title="Edit">' +
+                            '<input class="jsgrid-button jsgrid-delete-button delete-product-status" data-product-status-id="'+item.id + '" type="button" title="Delete">' +
+                            '</td>';
+                    }
+                }
+            ]
+        });
 
         return this;
     },
 
     createProductStatus: function () {
+        var productStatusView = new Tds.Views.ProductStatuses();
+        productStatusView.setModel(new Tds.Models.ProductStatus);
+
         Tds.getView('Modal').setMainContainer('main-container')
             .setTitle('Create product status')
             .setSaveTitle('Save')
             .setCloseTitle('Cancel')
-            .setView(new Tds.Views.ProductStatuses())
+            .setView(productStatusView)
             .show();
+    },
+
+    editProductStatus: function(){
+        alert('edit');
+    },
+
+    deleteProductStatus: function(){
+        alert('delete');
     }
 
 

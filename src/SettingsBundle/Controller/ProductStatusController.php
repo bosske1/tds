@@ -50,4 +50,43 @@ class ProductStatusController extends Controller
 
         return $this->json(array('success' => true, 'count' => count($productStatusList), 'data' => $productStatusList));
     }
+
+    /**
+     * Matches /productStatus
+     *
+     * @Route("/productStatus", name="productStatus_create")
+     * @Method("POST")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function createAction(Request $request)
+    {
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $organizationUnit = $this->get('doctrine')
+            ->getRepository('AppBundle:OrganizationUnit')
+            ->find($request->get('organizationUnitId'));
+
+        $productStatus = new ProductStatus();
+
+        /** @var ProductStatus $productStatus */
+        $productStatus->setName($request->get('name'))
+            ->setCreatedByUser($user)
+            ->setDtCreated(new \DateTime())
+            ->setModifiedByUser($user)
+            ->setOrganizationUnit($organizationUnit)
+            ->setDtModified(new \DateTime());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($productStatus);
+        $em->flush();
+
+        return $this->json(
+            array(
+                'success' => !empty($productStatus->getId()) ? true : false,
+                'id'      => $productStatus->getId()
+            )
+        );
+    }
 }
