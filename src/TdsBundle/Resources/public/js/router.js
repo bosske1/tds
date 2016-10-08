@@ -46,7 +46,7 @@ Tds.Router = Backbone.Router.extend({
             tdsModel = new Tds.Models.Tds();
         
         //defaults for now like this, until we figure out form where defaults come from...
-        tdsModel.set('data', [{x: 1, y: 1, width: 2, height: 3},{x: 4, y: 3, width: 3, height: 1}]);
+        tdsModel.set('data', [{x: 0, y: 0, width: 12, height: 4}]);
         tdsView.setModel(tdsModel);
 
         Tds.renderView(tdsView);
