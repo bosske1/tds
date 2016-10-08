@@ -42,16 +42,29 @@ Tds.Views.SegmentList = Backbone.View.extend({
     },
 
     fillTable: function(collection) {
-        var me = this,
-            tableContentText = '';
+        var me = this;
 
         this.$('#tds-list').jsGrid({
             width: "100%",
 
             sorting: true,
             paging: true,
+            autoload: true,
 
-            data: collection.toJSON(),
+            controller: {
+                loadData: function() {
+                    var d = $.Deferred();
+
+                    $.ajax({
+                        url: "/segment",
+                        dataType: "json"
+                    }).done(function(response) {
+                        d.resolve(response.data);
+                    });
+
+                    return d.promise();
+                }
+            },
 
             fields: [
                 {
@@ -76,7 +89,6 @@ Tds.Views.SegmentList = Backbone.View.extend({
                     title: 'Menu',
                     type: "control",
                     cellRenderer: function(value, item) {
-                        console.log(item);
                         return '<td class="jsgrid-cell jsgrid-control-field jsgrid-align-center" style="width: 50px;">' +
                                     '<input class="jsgrid-button jsgrid-edit-button edit-segment" data-segment-id="'+item.id + '" type="button" title="Edit">' +
                                     '<input class="jsgrid-button jsgrid-delete-button delete-segment" data-segment-id="'+item.id + '" type="button" title="Delete">' +
@@ -131,8 +143,13 @@ Tds.Views.SegmentList = Backbone.View.extend({
     deleteSegment: function(ev) {
         var me = this,
             segmentId = $(ev.currentTarget).data('segment-id'),
-            segmentModel = new Tds.Models.Segment();
+            segmentModel = new Tds.Models.Segment({id: segmentId});
 
-        console.log(this.$('#tds-list').jsGrid().data);
+        segmentModel.destroy({
+            url: 'segment/' + segmentId,
+            success: function(model, response) {
+                this.$('#tds-list').jsGrid('loadData');
+            }
+        });
     }
 });
