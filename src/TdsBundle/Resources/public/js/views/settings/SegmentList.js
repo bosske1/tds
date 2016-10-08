@@ -6,7 +6,8 @@ Tds.Views.SegmentList = Backbone.View.extend({
 
     events: {
         'click #create-segment-button'  : 'createSegment',
-        'click .edit-segment'           : 'editSegment'
+        'click .edit-segment'           : 'editSegment',
+        'click .delete-segment'         : 'deleteSegment'
     },
 
     render: function() {
@@ -44,19 +45,46 @@ Tds.Views.SegmentList = Backbone.View.extend({
         var me = this,
             tableContentText = '';
 
-        collection.each(function(model) {
-            tableContentText +=
-                "<tr>"+
-                    "<td>"+model.get('name')+"</td>"+
-                    "<td>"+model.get('createdBy')+"</td>"+
-                    "<td>"+model.get('dtCreated')+"</td>"+
-                    "<td>" +
-                        "<span><a data-segment-id='"+model.get('id')+"' class='fa fa-fw fa-edit edit-segment'></a></span>" +
-                    "</td>"+
-                "</tr>";
-        });
+        this.$('#tds-list').jsGrid({
+            width: "100%",
 
-        this.$('#table-content').append(tableContentText);
+            sorting: true,
+            paging: true,
+
+            data: collection.toJSON(),
+
+            fields: [
+                {
+                    title: 'Name',
+                    name: "name",
+                    type: "text",
+                    width: 150
+                },
+                {
+                    title: 'Created by',
+                    name: "createdBy",
+                    type: "number",
+                    width: 50
+                },
+                {
+                    title: 'Created',
+                    name: "dtCreated",
+                    type: "date",
+                    width: 200
+                },
+                {
+                    title: 'Menu',
+                    type: "control",
+                    cellRenderer: function(value, item) {
+                        console.log(item);
+                        return '<td class="jsgrid-cell jsgrid-control-field jsgrid-align-center" style="width: 50px;">' +
+                                    '<input class="jsgrid-button jsgrid-edit-button edit-segment" data-segment-id="'+item.id + '" type="button" title="Edit">' +
+                                    '<input class="jsgrid-button jsgrid-delete-button delete-segment" data-segment-id="'+item.id + '" type="button" title="Delete">' +
+                                '</td>';
+                    }
+                }
+            ]
+        });
 
         return this;
     },
@@ -98,5 +126,13 @@ Tds.Views.SegmentList = Backbone.View.extend({
                 //create error handler...
             }
         });
+    },
+
+    deleteSegment: function(ev) {
+        var me = this,
+            segmentId = $(ev.currentTarget).data('segment-id'),
+            segmentModel = new Tds.Models.Segment();
+
+        console.log(this.$('#tds-list').jsGrid().data);
     }
 });
