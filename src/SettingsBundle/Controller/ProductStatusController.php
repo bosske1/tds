@@ -14,7 +14,7 @@ use AppBundle\Entity\User;
 class ProductStatusController extends Controller
 {
     /**
-     * Matches /productStatuses/*
+     * Matches /productStatus/*
      *
      * @Route("/productStatus/{id}", name="productStatus_get")
      * @Method("GET")
@@ -30,5 +30,24 @@ class ProductStatusController extends Controller
             ->find((int)$id);
 
         return $this->json($productStatus);
+    }
+
+    /**
+     * Matches /productStatus
+     *
+     * @Route("/productStatus", name="productStatus_list")
+     * @Method("GET")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getListAction(Request $request) {
+        $responseData = [];
+
+        $productStatusList = $this->get('doctrine')
+            ->getRepository('SettingsBundle:ProductStatus')
+            ->findAll();
+
+        return $this->json(array('success' => true, 'count' => count($productStatusList), 'data' => $productStatusList));
     }
 }
