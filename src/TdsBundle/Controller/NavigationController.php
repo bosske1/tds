@@ -84,9 +84,10 @@ class NavigationController extends Controller
             ),
             array(
                 'label'     => 'Search',
-                'link'      => 'tds/list',
+                'link'      => 'list',
                 'icon'      => 'fa fa-list-ul',
-                'visible'   => true
+                'visible'   => true,
+                'children'  => $this->getSearchData()
             )
         );
 
@@ -95,5 +96,15 @@ class NavigationController extends Controller
             'length'    => count($data),
             'data' => $data
         ));
+    }
+
+    protected function getSearchData(){
+        return array(
+            array(
+                'label'     => 'Filter name',
+                'link'      => 'filter/search/1',
+                'visible'   => true
+            )
+        );
     }
 }
