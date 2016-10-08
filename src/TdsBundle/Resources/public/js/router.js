@@ -14,7 +14,7 @@ Tds.Router = Backbone.Router.extend({
         'settings/labels'           : 'setLabels',
         'settings/units'            : 'setUnits',
 
-        'templates'     : 'templates',
+        'templates'     : 'templateList',
         'translate'     : 'translate',
 
         'tds/list'       : 'tdsList',
@@ -119,10 +119,10 @@ Tds.Router = Backbone.Router.extend({
         Tds.renderView(setUnitsView);
     },
 
-    templates: function() {
-        var templatesView = new Tds.Views.Templates();
+    templateList: function() {
+        var templateListView = new Tds.Views.TemplateList();
 
-        Tds.renderView(templatesView);
+        Tds.renderView(templateListView);
     },
 
     translate : function() {

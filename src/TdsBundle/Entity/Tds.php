@@ -2,6 +2,7 @@
 
 namespace TdsBundle\Entity;
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
