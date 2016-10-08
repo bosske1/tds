@@ -20,7 +20,10 @@ Tds.Router = Backbone.Router.extend({
         'tds/list'       : 'tdsList',
         'tds/create'     : 'tdsCreate',
         'tds/edit/:id'   : 'tdsEdit',
-        'tds/filter/add' : 'tdsFilterAdd'
+        'tds/filter/add' : 'tdsFilterAdd',
+
+        'template/create'   : 'templateCreate',
+        'template/edit/:id' : 'templateEdit'
     },
 
     initialize: function() {
@@ -53,6 +56,39 @@ Tds.Router = Backbone.Router.extend({
     },
 
     tdsEdit: function(id) {
+        var me = this,
+            tdsView  = new Tds.Views.Tds(),
+            tdsModel = new Tds.Models.Tds();
+
+        tdsModel.fetch({
+            url: '/tds/' + id,
+            success: function (model, response, options) {
+                tdsView.setIsEditView(true)
+                       .setModel(model)
+                       .setTdsId(id);
+
+                Tds.renderView(tdsView);
+            },
+            error: function (collection, response, options) {
+
+                //create error handler...
+            }
+        });
+    },
+
+    //copy-paste until i figure out is it really a TDS
+    templateCreate : function(){
+        var tdsView = new Tds.Views.Tds(),
+            tdsModel = new Tds.Models.Tds();
+
+        tdsModel.set('isTemplate', 1);
+        tdsView.setModel(tdsModel);
+
+        Tds.renderView(tdsView);
+    },
+
+    //copy-paste until i figure out is it really a TDS
+    templateEdit : function(id){
         var me = this,
             tdsView  = new Tds.Views.Tds(),
             tdsModel = new Tds.Models.Tds();

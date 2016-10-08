@@ -32,7 +32,8 @@ class TdsController extends Controller
             ->setDtCreated(new \DateTime())
             ->setData($request->get('data'))
             ->setModifiedByUser($user)
-            ->setDtModified(new \DateTime());
+            ->setDtModified(new \DateTime())
+            ->setIsTemplate($request->get('isTemplate'));
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($tds);
@@ -68,7 +69,8 @@ class TdsController extends Controller
         /** @var Tds $tds */
         $tds->setData($request->get('data'))
             ->setModifiedByUser($user)
-            ->setDtModified(new \DateTime());
+            ->setDtModified(new \DateTime())
+            ->setIsTemplate($request->get('isTemplate'));
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($tds);

@@ -55,8 +55,8 @@ class TemplateController extends Controller
         foreach($tdsList as $tds) {
             $tdsData['id']      = $tds->getId();
             $tdsData['name']    = $tds->getName();
-            $tdsData['created_by'] = $tds->getCreatedByUser()->getFirstName();
-            $tdsData['dt_created'] = $tds->getDtCreated()->format('Y/m/d H:i:s');
+            $tdsData['createdBy'] = $tds->getCreatedByUser()->getFirstName();
+            $tdsData['dtCreated'] = $tds->getDtCreated()->format('Y/m/d H:i:s');
             $tdsData['can_read'] = $this->isGranted(TdsVoter::READ, $tds);
             $tdsData['can_edit'] = $this->isGranted(TdsVoter::EDIT, $tds);;
 

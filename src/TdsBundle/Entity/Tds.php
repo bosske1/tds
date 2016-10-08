@@ -226,6 +226,8 @@ class Tds
     public function setDtModified($dtModified)
     {
         $this->dtModified = $dtModified;
+
+        return $this;
     }
 
     /**
@@ -242,6 +244,8 @@ class Tds
     public function setModifiedBy($modifiedBy)
     {
         $this->modifiedBy = $modifiedBy;
+
+        return $this;
     }
 
     /**
