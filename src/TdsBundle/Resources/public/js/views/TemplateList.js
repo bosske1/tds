@@ -33,6 +33,11 @@ Tds.Views.TemplateList = Backbone.View.extend({
 
                     $.ajax({
                         url: "/template",
+                        data : {
+                            filter : {
+                                'isTemplate' : 1
+                            }
+                        },
                         dataType: "json"
                     }).done(function(response) {
                         d.resolve(response.data);

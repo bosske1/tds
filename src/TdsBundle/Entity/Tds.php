@@ -77,6 +77,13 @@ class Tds
     private $data;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="is_template", type="integer", nullable=true)
+     */
+    private $isTemplate;
+
+    /**
      * Get id
      *
      * @return int
@@ -254,6 +261,30 @@ class Tds
         $this->modifiedByUser = $user;
 
         return $this;
+    }
+
+    /**
+     * Set isTemplate
+     *
+     * @param int $isTemplate
+     *
+     * @return Tds
+     */
+    public function setIsTemplate($isTemplate)
+    {
+        $this->isTemplate = $isTemplate;
+
+        return $this;
+    }
+
+    /**
+     * Get isTemplate
+     *
+     * @return int
+     */
+    public function getIsTemplate()
+    {
+        return $this->isTemplate;
     }
 }
 

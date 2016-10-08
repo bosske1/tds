@@ -32,10 +32,12 @@ class TdsRepository extends \Doctrine\ORM\EntityRepository
 
     protected function setFilters($filter)
     {
-        $name = $filter['name'];
-        $dt_created = $filter['dt_created'];
+        foreach($filter as $filterKey => $filterValue){
 
-        $this->queryBuilder->where('t.name = :name')->setParameter('name', 'test');
+            $this->queryBuilder->where("t.{$filterKey} = :{$filterKey}")->setParameter("{$filterKey}", "{$filterValue}");
+        }
+
+
 
         return $this;
     }
