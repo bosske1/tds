@@ -154,9 +154,7 @@ class TdsController extends Controller
 
         $responseData = [];
 
-        $tdsList = $this->get('doctrine')
-            ->getRepository('TdsBundle:Tds')
-            ->findByFilters($request->get('filter'));
+        $tdsList = $this->get('tds.searchingService')->findByFilters();
 
         /** @var Tds $tds */
         foreach($tdsList as $tds) {
