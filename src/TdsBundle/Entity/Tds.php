@@ -77,9 +77,9 @@ class Tds
     private $data;
 
     /**
-     * @var int
+     * @var boolean
      *
-     * @ORM\Column(name="is_template", type="integer", nullable=true)
+     * @ORM\Column(name="is_template", type="boolean", nullable=false, options={"default":0})
      */
     private $isTemplate;
 

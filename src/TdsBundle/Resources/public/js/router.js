@@ -185,10 +185,12 @@ Tds.Router = Backbone.Router.extend({
         Tds.renderView(translateView);
     },
 
+    /**
+     * basically show filters and search by them, but also add 'Add' button
+     */
     tdsFilterAdd: function() {
-        var filterModel = new Tds.Models.Filter(),
-            filterAddView = new Tds.Views.FilterAdd({ model : filterModel });
+        var tdsListView = new Tds.Views.TdsList();
 
-        Tds.renderView(filterAddView);
+        Tds.renderView(tdsListView);
     }
 });

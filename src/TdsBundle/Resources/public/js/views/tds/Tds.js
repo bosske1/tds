@@ -44,6 +44,7 @@ Tds.Views.Tds = Backbone.View.extend({
             parsedData = Tds.getParser('TdsHtmlToJson').setContainer(this.getGridStackContainer()).parse();
 
         this.getModel().set('data', parsedData);
+        this.getModel().set('isTemplate', 0);
         this.getModel().save({
             success: function (model, response, options) {
 

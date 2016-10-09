@@ -1,7 +1,8 @@
 Tds.Views.FilterAdd = Backbone.View.extend({
 
     events : {
-        'click #filter-add' : 'onFilterAddButtonClick'
+        'click #filter-add' : 'onFilterAddButtonClick',
+        'click #filter-search' : 'onFilterSearchButtonClick'
     },
 
     initialize: function() {
@@ -21,7 +22,11 @@ Tds.Views.FilterAdd = Backbone.View.extend({
 
     onFilterAddButtonClick : function(){
 
-        //do some here check i guess...
+        if(!Tds.getHelper('View').checkMandatoryFields('filter-add-form')) {
+            Tds.getView('Modal').showError('Check mandatory fields!');
+
+            return false;
+        }
 
         this.model.save({
             success : function(response){
@@ -31,6 +36,10 @@ Tds.Views.FilterAdd = Backbone.View.extend({
 
             }
         });
+    },
+
+    onFilterSearchButtonClick : function(){
+        $('#search-grid-container').html('fjsd')
     }
 
 });

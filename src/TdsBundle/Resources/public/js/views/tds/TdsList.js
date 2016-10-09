@@ -1,5 +1,7 @@
 Tds.Views.TdsList = Backbone.View.extend({
 
+    filters : {},
+
     initialize: function() {
         this.template= _.template($('#tpl-tds-list').html());
     },
@@ -13,56 +15,87 @@ Tds.Views.TdsList = Backbone.View.extend({
 
     afterRender: function() {
 
-        //render filters
         var tdsListFilters = new Tds.Views.TdsListFilters({
-
+            tdsListView : this
         });
         this.$el
-            .find('#filters-container')
+            .find('#tds-list-filter-container')
             .html((tdsListFilters).render().$el);
-
-        this.getData();
-    },
-
-    getData: function() {
-        var me = this,
-            collection = new Tds.Collections.Tds;
-
-        collection.fetch({
-            success: function(collection, response){
-                if(collection){
-                    me.fillTable(collection);
-                } else {
-                    alert(response['error_message']);
-                }
-            },
-            failure: function(){
-
-            }
-        });
-
-        return this;
     },
 
     fillTable: function(collection) {
-        var me = this,
-            tableContentText = '';
+        var me = this;
 
-        collection.each(function(model){
-            tableContentText +=
-                "<tr>"+
-                "<td>"+model.get('name')+"</td>"+
-                "<td>"+model.get('created_by')+"</td>"+
-                "<td>"+model.get('dt_created')+"</td>"+
-                "<td>" +
-                    "<span><a href='#tds/edit/"+ model.get('id') + "' class='fa fa-fw fa-edit'></a></span>" +
-                "</td>"+
-                "</tr>";
+        this.$('#tds-list-table').jsGrid({
+            width: "100%",
+
+            sorting: true,
+            paging: true,
+            autoload: true,
+
+            controller: {
+                loadData: function() {
+                    var d = $.Deferred();
+
+                    $.ajax({
+                        url: "/tds",
+                        data : {
+                            filter : me.getFilters()
+                        },
+                        dataType: "json"
+                    }).done(function(response) {
+                        d.resolve(response.data);
+
+                        Tds.fixContainerLayout();
+                    });
+
+                    return d.promise();
+                }
+            },
+
+            fields: [
+                {
+                    title: 'Name',
+                    name: "name",
+                    type: "text",
+                    width: 150
+                },
+                {
+                    title: 'Created by',
+                    name: "createdBy",
+                    type: "number",
+                    width: 50
+                },
+                {
+                    title: 'Created',
+                    name: "dtCreated",
+                    type: "date",
+                    width: 200
+                },
+                {
+                    title: 'Menu',
+                    type: "control",
+                    cellRenderer: function(value, item) {
+                        return '<td class="jsgrid-cell jsgrid-control-field jsgrid-align-center" style="width: 50px;">' +
+                                    '<input class="jsgrid-button jsgrid-edit-button edit-template" data-template-id="'+item.id + '" type="button" title="Edit">' +
+                                    '<input class="jsgrid-button jsgrid-delete-button delete-template" data-template-id="'+item.id + '" type="button" title="Delete">' +
+                                '</td>';
+                    }
+                }
+            ]
         });
 
-        this.$('#table-content').append(tableContentText);
+        return this;
+    },
+
+    setFilters : function(filters){
+        this.filters = filters;
 
         return this;
+    },
+
+    getFilters : function(){
+        return this.filters;
     }
 
 });
