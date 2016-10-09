@@ -13,7 +13,6 @@ use AppBundle\Entity\User;
 
 class SegmentController extends Controller
 {
-
     /**
      * Matches /segment/*
      *
@@ -98,9 +97,10 @@ class SegmentController extends Controller
      * @Method("PUT")
      *
      * @param Request $request
+     * @param $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function updateAction(Request $request)
+    public function updateAction(Request $request, $id)
     {
         /** @var User $user */
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -110,7 +110,7 @@ class SegmentController extends Controller
 
         $segment = $this->get('doctrine')
             ->getRepository('SettingsBundle:Segment')
-            ->find((int)$request->get('id'));
+            ->find((int)$id);
 
         /** @var Segment $segment */
         $segment->setName($request->get('name'))
@@ -137,6 +137,7 @@ class SegmentController extends Controller
      * @Method("DELETE")
      *
      * @param Request $request
+     * @param $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function deleteAction(Request $request, $id)
@@ -158,5 +159,4 @@ class SegmentController extends Controller
             )
         );
     }
-
 }

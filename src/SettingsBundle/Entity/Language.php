@@ -7,20 +7,25 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\OrganizationUnit;
 
 /**
- * Segment
+ * Language
  *
- * @ORM\Table(name="segment")
- * @ORM\Entity(repositoryClass="SettingsBundle\Repository\SegmentRepository")
+ * @ORM\Table(name="languages")
+ * @ORM\Entity(repositoryClass="SettingsBundle\Repository\LanguageRepository")
  */
-class Segment extends AbstractEntity
+class Language extends AbstractEntity
 {
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lang")
+     * @ORM\JoinColumn(name="lang_id", referencedColumnName="id")
+     */
+    private $lang;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="name", type="string", length=55)
+     * @ORM\Column(name="lang_id", type="integer")
      */
-    private $name;
+    protected $langId;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\OrganizationUnit")
@@ -36,27 +41,39 @@ class Segment extends AbstractEntity
     protected $organizationUnitId;
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Segment
+     * @return mixed
      */
-    public function setName($name)
+    public function getLang()
     {
-        $this->name = $name;
+        return $this->lang;
+    }
+
+    /**
+     * @param mixed $lang
+     */
+    public function setLang($lang)
+    {
+        $this->lang = $lang;
 
         return $this;
     }
 
     /**
-     * Get name
-     *
-     * @return string
+     * @return mixed
      */
-    public function getName()
+    public function getLangId()
     {
-        return $this->name;
+        return $this->langId;
+    }
+
+    /**
+     * @param mixed $langId
+     */
+    public function setLangId($langId)
+    {
+        $this->langId = $langId;
+
+        return $this;
     }
 
     /**
@@ -69,7 +86,6 @@ class Segment extends AbstractEntity
 
     /**
      * @param mixed $organizationUnit
-     * @return Trademark
      */
     public function setOrganizationUnit($organizationUnit)
     {
@@ -88,7 +104,6 @@ class Segment extends AbstractEntity
 
     /**
      * @param int $organizationUnitId
-     * @return Trademark
      */
     public function setOrganizationUnitId($organizationUnitId)
     {
@@ -97,3 +112,4 @@ class Segment extends AbstractEntity
         return $this;
     }
 }
+

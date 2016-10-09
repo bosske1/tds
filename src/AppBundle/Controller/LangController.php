@@ -10,28 +10,26 @@ use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class OrganizationUnitController extends Controller
+class LangController extends Controller
 {
     /**
-     * Matches /organizationunit
+     * Matches /lang
      *
-     * @Route("/organizationunit", name="organization_unit_list")
+     * @Route("/lang", name="lang_list")
      * @Method("GET")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function getListAction(Request $request) {
-        $responseData = [];
-
-        $organizationUnitList = $this->get('doctrine')
-            ->getRepository('AppBundle:OrganizationUnit')
+        $langList = $this->get('doctrine')
+            ->getRepository('AppBundle:Lang')
             ->findAll();
 
         return $this->json(array(
             'success' => true,
-            'count' => count($responseData),
-            'data' => $organizationUnitList)
+            'count' => count($langList),
+            'data' => $langList)
         );
     }
 }

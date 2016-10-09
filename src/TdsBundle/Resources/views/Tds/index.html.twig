@@ -15,7 +15,8 @@
                 {% include 'TdsBundle:Tds:dashboard.html.twig' %}
                 {% include 'TdsBundle:Tds:modal.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/settings/setLabels.html.twig' %}
-                {% include 'TdsBundle:Tds:templates/settings/setLang.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/settings/languageList.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/settings/language.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/settings/setPrefixes.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/settings/segmentList.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/settings/segment.html.twig' %}
@@ -59,7 +60,8 @@
                     '@TdsBundle/Resources/public/js/views/settings/ProductStatuses.js'
                     '@TdsBundle/Resources/public/js/views/settings/SetTrademarks.js'
                     '@TdsBundle/Resources/public/js/views/settings/SetPrefixes.js'
-                    '@TdsBundle/Resources/public/js/views/settings/SetLang.js'
+                    '@TdsBundle/Resources/public/js/views/settings/LanguageList.js'
+                    '@TdsBundle/Resources/public/js/views/settings/Language.js'
                     '@TdsBundle/Resources/public/js/views/settings/SetLabels.js'
                     '@TdsBundle/Resources/public/js/views/settings/SetUnits.js'
                     '@TdsBundle/Resources/public/js/views/filters/FilterList.js'
@@ -70,17 +72,21 @@
                     '@TdsBundle/Resources/public/js/views/tds/TdsList.js'
                     '@TdsBundle/Resources/public/js/models/settings/Segment.js'
                     '@TdsBundle/Resources/public/js/models/settings/Trademark.js'
+                    '@TdsBundle/Resources/public/js/models/settings/Language.js'
                     '@TdsBundle/Resources/public/js/models/settings/ProductStatus.js'
                     '@TdsBundle/Resources/public/js/models/tds/Tds.js'
                     '@TdsBundle/Resources/public/js/models/Filter.js'
                     '@TdsBundle/Resources/public/js/models/Navigation.js'
                     '@TdsBundle/Resources/public/js/models/OrganizationUnit.js'
+                    '@TdsBundle/Resources/public/js/models/Lang.js'
                     '@TdsBundle/Resources/public/js/collections/settings/Segment.js'
                     '@TdsBundle/Resources/public/js/collections/settings/ProductStatus.js'
                     '@TdsBundle/Resources/public/js/collections/settings/Trademark.js'
+                    '@TdsBundle/Resources/public/js/collections/settings/Language.js'
                     '@TdsBundle/Resources/public/js/collections/tds/Tds.js'
                     '@TdsBundle/Resources/public/js/collections/Navigation.js'
                     '@TdsBundle/Resources/public/js/collections/OrganizationUnits.js'
+                    '@TdsBundle/Resources/public/js/collections/Langs.js'
                     '@TdsBundle/Resources/public/js/parser/TdsHtmlToJson.js'
                     '@TdsBundle/Resources/public/js/parser/TdsJsonToHtml.js'
                     '@TdsBundle/Resources/public/js/services/CollectionDataContainer.js'

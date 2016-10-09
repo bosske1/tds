@@ -10,7 +10,7 @@ Tds.Router = Backbone.Router.extend({
         'settings/productStatuses'  : 'setProductStatuses',
         'settings/trademarks'       : 'setTrademarks',
         'settings/prefixes'         : 'setPrefixes',
-        'settings/lang'             : 'setLang',
+        'settings/lang'             : 'languageList',
         'settings/labels'           : 'setLabels',
         'settings/units'            : 'setUnits',
 
@@ -101,10 +101,10 @@ Tds.Router = Backbone.Router.extend({
         Tds.renderView(setPrefixesView);
     },
 
-    setLang: function() {
-        var setLangView = new Tds.Views.SetLang();
+    languageList: function() {
+        var languageListView = new Tds.Views.LanguageList();
 
-        Tds.renderView(setLangView);
+        Tds.renderView(languageListView);
     },
 
     setLabels: function() {
