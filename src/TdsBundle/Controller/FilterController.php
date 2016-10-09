@@ -25,23 +25,20 @@ class FilterController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         /** @var Filter $tds */
-        $tds = new Filter();
-        $tds->setName($request->get('name'))
+        $filter = new Filter();
+        $filter->setName($request->get('name'))
             ->setCreatedByUser($user)
             ->setDtCreated(new \DateTime())
-            ->setData($request->get('data'))
-            ->setModifiedByUser($user)
-            ->setDtModified(new \DateTime())
-            ->setIsTemplate($request->get('isTemplate'));
+            ->setData(json_encode($request->get('data')));
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($tds);
+        $em->persist($filter);
         $em->flush();
 
         return $this->json(
             array(
                 'success' => true,
-                'id'      => 1
+                'id'      => $filter->getId()
             )
         );
     }

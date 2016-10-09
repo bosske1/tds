@@ -42,6 +42,7 @@ Tds.Views.TdsListFilters = Backbone.View.extend({
         var filters = this.buildFilters(),
             filterModel = new Tds.Models.Filter();
 
+        filterModel.set('name', $('#filter_name').val());
         filterModel.set('data', filters);
         filterModel.save({
             success: function (model, response, options) {
