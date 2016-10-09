@@ -56,14 +56,15 @@ Tds.Router = Backbone.Router.extend({
 
                 //assign data from template
                 var tdsModel = new Tds.Models.Tds({
-                    'data' : templateModel.get('data')
+                    'data' : templateModel.get('data'),
+                    'isTemplate' : 0
                 });
 
                 tdsView.setModel(tdsModel);
                 Tds.renderView(tdsView);
             },
             error: function (collection, response, options) {
-
+                alert('cannot find predefined template');
                 //create error handler...
             }
         });
