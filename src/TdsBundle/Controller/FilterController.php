@@ -9,6 +9,7 @@ use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
+use TdsBundle\Entity\Filter;
 
 class FilterController extends Controller
 {
@@ -22,6 +23,20 @@ class FilterController extends Controller
     {
         /** @var User $user */
         $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        /** @var Filter $tds */
+        $tds = new Filter();
+        $tds->setName($request->get('name'))
+            ->setCreatedByUser($user)
+            ->setDtCreated(new \DateTime())
+            ->setData($request->get('data'))
+            ->setModifiedByUser($user)
+            ->setDtModified(new \DateTime())
+            ->setIsTemplate($request->get('isTemplate'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($tds);
+        $em->flush();
 
         return $this->json(
             array(

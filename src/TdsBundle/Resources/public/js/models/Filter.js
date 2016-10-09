@@ -6,7 +6,8 @@ Tds.Models.Filter = Backbone.Model.extend({
         id          :   null,
         created_by  :   null,
         dt_created  :   null,
-        name	    :   null
+        name	    :   null,
+        data        :   {}
     },
 
     initialize: function() {

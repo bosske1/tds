@@ -8,7 +8,8 @@ Tds.Views.TdsListFilters = Backbone.View.extend({
     },
 
     events : {
-        'click #tds-list-filter-button' : 'onTdsListFilterButtonClick'
+        'click #tds-list-filter-button' : 'onTdsListFilterButtonClick',
+        'click #tds-list-add-button'    : 'onTdsListAddButtonClick'
     },
 
     render: function() {
@@ -27,6 +28,31 @@ Tds.Views.TdsListFilters = Backbone.View.extend({
         this.tdsListView.fillTable();
 
         return this;
+    },
+
+    onTdsListAddButtonClick : function(){
+        if(!Tds.getHelper('View').checkMandatoryFields('filter-add-form')) {
+            return false;
+        }
+
+        this.doSaveFilters();
+    },
+
+    doSaveFilters : function(){
+        var filters = this.buildFilters(),
+            filterModel = new Tds.Models.Filter();
+
+        filterModel.set('data', filters);
+        filterModel.save({
+            success: function (model, response, options) {
+
+                //do something...
+            },
+            error: function (collection, response, options) {
+
+                //create error handler...
+            }
+        });
     },
 
     buildFilters : function(){
