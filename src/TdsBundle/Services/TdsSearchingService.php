@@ -46,11 +46,23 @@ class TdsSearchingService
             $filter = array();
         }
 
+        $filterIndex = 0;
         foreach($filter as $filterKey => $filterValue){
-            $this->queryBuilder->where("t.{$filterKey} = {$filterValue}");
+            $this->assignFilter($filterIndex, $filterKey, $filterValue);
+
+            $filterIndex++;
         }
 
         return $this;
+    }
+
+    protected function assignFilter($filterIndex, $filterKey, $filterValue)
+    {
+        if($filterIndex === 0){
+            return $this->queryBuilder->where("t.{$filterKey} = '{$filterValue}'");
+        }
+
+        return $this->queryBuilder->andWhere("t.{$filterKey} = '{$filterValue}'");
     }
 
     protected function getResult()
