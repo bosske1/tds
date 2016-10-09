@@ -26,12 +26,13 @@
                 {% include 'TdsBundle:Tds:templates/settings/productStatuses.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/settings/setTrademarks.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/settings/setUnits.html.twig' %}
-                {% include 'TdsBundle:Tds:templates/templates.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/templateList.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/translate.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/search-add-edit.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/filters/add.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/tds.html.twig' %}
                 {% include 'TdsBundle:Tds:templates/tdsList.html.twig' %}
+                {% include 'TdsBundle:Tds:templates/tdsListFilters.html.twig' %}
 
                 {% block javascripts %}
                     <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery-3.1.0.min.js') }}"></script>
@@ -66,10 +67,11 @@
                     '@TdsBundle/Resources/public/js/views/settings/SetUnits.js'
                     '@TdsBundle/Resources/public/js/views/filters/FilterList.js'
                     '@TdsBundle/Resources/public/js/views/filters/FilterAdd.js'
-                    '@TdsBundle/Resources/public/js/views/Templates.js'
+                    '@TdsBundle/Resources/public/js/views/TemplateList.js'
                     '@TdsBundle/Resources/public/js/views/Translate.js'
                     '@TdsBundle/Resources/public/js/views/tds/Tds.js'
                     '@TdsBundle/Resources/public/js/views/tds/TdsList.js'
+                    '@TdsBundle/Resources/public/js/views/tds/TdsListFilters.js'
                     '@TdsBundle/Resources/public/js/models/settings/Segment.js'
                     '@TdsBundle/Resources/public/js/models/settings/Trademark.js'
                     '@TdsBundle/Resources/public/js/models/settings/Language.js'
@@ -84,6 +86,7 @@
                     '@TdsBundle/Resources/public/js/collections/settings/Trademark.js'
                     '@TdsBundle/Resources/public/js/collections/settings/Language.js'
                     '@TdsBundle/Resources/public/js/collections/tds/Tds.js'
+                    '@TdsBundle/Resources/public/js/collections/Filter.js'
                     '@TdsBundle/Resources/public/js/collections/Navigation.js'
                     '@TdsBundle/Resources/public/js/collections/OrganizationUnits.js'
                     '@TdsBundle/Resources/public/js/collections/Langs.js'

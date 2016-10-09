@@ -15,7 +15,7 @@ Tds.Parsers.TdsJsonToHtml = {
             if(typeof nodeHtml == 'undefined'){
                 nodeHtml = '';
             }
-            this.grid.addWidget($('<div><div class="grid-stack-item-content">' + nodeHtml + '<div/><div/>'),
+            this.grid.addWidget($('<div data-gs-no-resize="true"><div class="grid-stack-item-content">' + nodeHtml + '<div/><div/>'),
                 node.x, node.y, node.width, node.height);
         }, this);
     },

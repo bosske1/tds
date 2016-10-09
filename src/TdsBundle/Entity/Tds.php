@@ -2,6 +2,7 @@
 
 namespace TdsBundle\Entity;
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -74,6 +75,13 @@ class Tds
      * @ORM\Column(name="data", type="text", nullable=true)
      */
     private $data;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_template", type="boolean", nullable=false, options={"default":0})
+     */
+    private $isTemplate;
 
     /**
      * Get id
@@ -218,6 +226,8 @@ class Tds
     public function setDtModified($dtModified)
     {
         $this->dtModified = $dtModified;
+
+        return $this;
     }
 
     /**
@@ -234,6 +244,8 @@ class Tds
     public function setModifiedBy($modifiedBy)
     {
         $this->modifiedBy = $modifiedBy;
+
+        return $this;
     }
 
     /**
@@ -253,6 +265,30 @@ class Tds
         $this->modifiedByUser = $user;
 
         return $this;
+    }
+
+    /**
+     * Set isTemplate
+     *
+     * @param int $isTemplate
+     *
+     * @return Tds
+     */
+    public function setIsTemplate($isTemplate)
+    {
+        $this->isTemplate = $isTemplate;
+
+        return $this;
+    }
+
+    /**
+     * Get isTemplate
+     *
+     * @return int
+     */
+    public function getIsTemplate()
+    {
+        return $this->isTemplate;
     }
 }
 

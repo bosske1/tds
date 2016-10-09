@@ -9,6 +9,11 @@ Tds.Views.ProductStatuses = Backbone.View.extend({
 
     model: null,
 
+    toPostFormData: [
+        'name',
+        'organizationUnitId'
+    ],
+
     events: {
 
     },
@@ -18,12 +23,39 @@ Tds.Views.ProductStatuses = Backbone.View.extend({
     },
 
     render: function() {
-        var html = this.template();
+        var html = this.template({
+            'model': this.getModel()
+        });
         this.$el.html(html);
 
         this.postRender();
 
         return this;
+    },
+
+    afterRender: function() {
+
+    },
+
+    postRender: function(view) {
+        this.bindEvents();
+        this.initSelects();
+
+        return this;
+    },
+
+    initSelects: function() {
+        var me = this;
+
+        Tds.getService('CollectionDataContainer').clear('OrganizationUnits').get('OrganizationUnits', {
+            success: function(collection, response) {
+                if (collection) {
+                    Tds.getHelper('View').setView(me).populateSelect('organizationUnitId', collection, me.model.get('organizationUnitId'));
+                } else {
+                    alert('Error fetching organization units');
+                }
+            }
+        });
     },
 
     bindEvents: function() {
@@ -35,18 +67,12 @@ Tds.Views.ProductStatuses = Backbone.View.extend({
         return this;
     },
 
-    postRender: function(view) {
-        this.bindEvents();
-
-        return this;
+    setProductStatusId: function(ProductStatusId) {
+        this.ProductStatusId = ProductStatusId;
     },
 
-    setSegmentId: function(segmentId) {
-        this.segmentId = segmentId;
-    },
-
-    getSegmentId: function() {
-        return this.segmentId;
+    getProductStatusId: function() {
+        return this.ProductStatusId;
     },
 
     setModel: function(model) {
@@ -70,6 +96,42 @@ Tds.Views.ProductStatuses = Backbone.View.extend({
     },
 
     onSave: function () {
-        alert('mrk!');
+        var me = this,
+            router = new Tds.Router(),
+            productStatus = this.getModel(),
+            data = {};
+
+        if(!Tds.getHelper('View').checkMandatoryFields('segment-form')) {
+            Tds.getView('Modal').showError('Check mandatory fields!');
+
+            return false;
+        }
+
+        $.each(me.toPostFormData, function(index, item) {
+            data[item] = $('#' + item).val();
+        });
+
+        productStatus.set(data);
+        productStatus.save(null, {
+            url: me.getSaveUrl(),
+            success: function (model, response) {
+                Tds.getView('Modal').hide();
+                this.$('#product-status-grid').jsGrid('loadData');
+            },
+            error: function (model, response) {
+                Tds.getView('Modal').showError('Error occurred!');
+            }
+        });
+    },
+
+    getSaveUrl: function() {
+        if(this.getIsEditView() && this.getProductStatusId() != null){
+            return '/productStatus/' + this.getProductStatusId();
+        } else {
+            return '/productStatus';
+        }
     }
+
+
+
 });

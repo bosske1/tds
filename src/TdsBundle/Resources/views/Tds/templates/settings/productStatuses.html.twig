@@ -1,5 +1,15 @@
 <script type="text/template" id="tpl-product-statuses">
-    <div>
-        CAO BRANKO!!!
-    </div>
+    <form role="form" id="product-status-form" >
+
+        <div class="form-group">
+            <label>Name:</label>
+            <input name="name" id="name" class="form-control mandatory" value="<%= model.get('name') %>">
+        </div>
+
+        <div class="form-group">
+            <label>Organization unit</label>
+            <select id="organizationUnitId" class="form-control mandatory">
+            </select>
+        </div>
+    </form>
 </script>

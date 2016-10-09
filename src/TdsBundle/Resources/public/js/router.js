@@ -8,19 +8,25 @@ Tds.Router = Backbone.Router.extend({
         'settings/segment/edit/:id' : 'editSegment',
 
         'settings/productStatuses'  : 'setProductStatuses',
+        'settings/productStatus/edit/:id' : 'editProductStatus',
+
         'settings/trademarks'       : 'setTrademarks',
         'settings/prefixes'         : 'setPrefixes',
         'settings/lang'             : 'languageList',
         'settings/labels'           : 'setLabels',
         'settings/units'            : 'setUnits',
 
-        'templates'     : 'templates',
+        'templates'     : 'templateList',
         'translate'     : 'translate',
 
-        'tds/list'       : 'tdsList',
         'tds/create'     : 'tdsCreate',
         'tds/edit/:id'   : 'tdsEdit',
-        'tds/filter/add' : 'tdsFilterAdd'
+
+        'tds/filter/add' : 'tdsFilterAdd',
+        'tds/filter/:id' : 'tdsFilter',
+
+        'template/create'   : 'templateCreate',
+        'template/edit/:id' : 'templateEdit'
     },
 
     initialize: function() {
@@ -35,24 +41,64 @@ Tds.Router = Backbone.Router.extend({
         $('#main-container').html(dashboardView.render().$el);
     },
 
-    tdsList: function() {
-        var tdsListView = new Tds.Views.TdsList();
-
-        Tds.renderView(tdsListView);
-    },
-
     tdsCreate: function() {
         var tdsView = new Tds.Views.Tds(),
             tdsModel = new Tds.Models.Tds();
-        
-        //defaults for now like this, until we figure out form where defaults come from...
-        tdsModel.set('data', [{x: 0, y: 0, width: 12, height: 4}]);
+
+        tdsModel.fetch({
+            url: '/template/fetchTemplateBasedOnUser',
+            success: function (templateModel, response, options) {
+
+                //assign data from template
+                var tdsModel = new Tds.Models.Tds({
+                    'data' : templateModel.get('data'),
+                    'isTemplate' : 0
+                });
+
+                tdsView.setModel(tdsModel);
+                Tds.renderView(tdsView);
+            },
+            error: function (collection, response, options) {
+                alert('cannot find predefined template');
+                //create error handler...
+            }
+        });
+    },
+
+    tdsEdit: function(id) {
+        var me = this,
+            tdsView  = new Tds.Views.Tds(),
+            tdsModel = new Tds.Models.Tds();
+
+        tdsModel.fetch({
+            url: '/tds/' + id,
+            success: function (model, response, options) {
+                tdsView.setIsEditView(true)
+                       .setModel(model)
+                       .setTdsId(id);
+
+                Tds.renderView(tdsView);
+            },
+            error: function (collection, response, options) {
+
+                //create error handler...
+            }
+        });
+    },
+
+    //copy-paste until i figure out is it really a TDS
+    templateCreate : function(){
+        var tdsView = new Tds.Views.Tds(),
+            tdsModel = new Tds.Models.Tds();
+
+        tdsModel.set('isTemplate', 1);
         tdsView.setModel(tdsModel);
 
         Tds.renderView(tdsView);
     },
 
-    tdsEdit: function(id) {
+    //copy-paste until i figure out is it really a TDS
+    templateEdit : function(id){
         var me = this,
             tdsView  = new Tds.Views.Tds(),
             tdsModel = new Tds.Models.Tds();
@@ -80,6 +126,10 @@ Tds.Router = Backbone.Router.extend({
     },
 
     editSegment: function (id) {
+
+    },
+
+    editProductStatus: function(id){
 
     },
 
@@ -119,10 +169,10 @@ Tds.Router = Backbone.Router.extend({
         Tds.renderView(setUnitsView);
     },
 
-    templates: function() {
-        var templatesView = new Tds.Views.Templates();
+    templateList: function() {
+        var templateListView = new Tds.Views.TemplateList();
 
-        Tds.renderView(templatesView);
+        Tds.renderView(templateListView);
     },
 
     translate : function() {
@@ -131,10 +181,35 @@ Tds.Router = Backbone.Router.extend({
         Tds.renderView(translateView);
     },
 
+    /**
+     * basically show filters and search by them, but also add 'Add' button
+     */
     tdsFilterAdd: function() {
         var filterModel = new Tds.Models.Filter(),
-            filterAddView = new Tds.Views.FilterAdd({ model : filterModel });
+            tdsListView = new Tds.Views.TdsList({ filterModel : filterModel });
 
-        Tds.renderView(filterAddView);
+        Tds.renderView(tdsListView);
+    },
+
+    tdsFilter: function(id) {
+        var me = this,
+            tdsFilterModel = new Tds.Models.Filter();
+
+        tdsFilterModel.fetch({
+            url: '/filter/' + id,
+            success: function (filterModel, response, options) {
+                var tdsListView  = new Tds.Views.TdsList({ filterModel : filterModel });
+
+                tdsListView.setFilters(filterModel.get('data'));
+                Tds.renderView(tdsListView);
+
+                tdsListView.fillFilterView(filterModel)
+                           .fillTable();
+            },
+            error: function (collection, response, options) {
+
+                //create error handler...
+            }
+        });
     }
 });

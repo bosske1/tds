@@ -2,9 +2,11 @@
 
 namespace TdsBundle\Controller;
 
+use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use TdsBundle\Entity\Filter;
 
 class NavigationController extends Controller
 {
@@ -98,13 +100,26 @@ class NavigationController extends Controller
         ));
     }
 
-    protected function getSearchData(){
-        return array(
-            array(
-                'label'     => 'Filter name',
-                'link'      => 'filter/search/1',
-                'visible'   => true
-            )
-        );
+    protected function getSearchData()
+    {
+        $filterData = array();
+
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $filterList = $this->get('doctrine')
+            ->getRepository('TdsBundle:Filter')
+            ->findBy(array('createdBy' => $user->getId()));
+
+        /** @var Filter $filter */
+        foreach($filterList as $filter){
+            $filterData[] = array(
+                'label'   => $filter->getName(),
+                'link'    => 'tds/filter/' . $filter->getId(),
+                'visible' => true
+            );
+        }
+
+        return $filterData;
     }
 }

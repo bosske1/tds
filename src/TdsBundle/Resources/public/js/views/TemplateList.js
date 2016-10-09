@@ -1,13 +1,13 @@
-Tds.Views.TdsList = Backbone.View.extend({
+Tds.Views.TemplateList = Backbone.View.extend({
 
-    filters : {},
+    initialize: function() {
+        this.template= _.template($('#tpl-templates').html());
+    },
 
-    filterModel : null,
-    filterView  : null,
-
-    initialize: function(options) {
-        this.filterModel = options.filterModel;
-        this.template= _.template($('#tpl-tds-list').html());
+    events : {
+        'click #create-template-button'  : 'onCreateTemplateButtonClick',
+        'click .edit-template'           : 'onEditTemplateButtonClick',
+        'click .delete-template'         : 'onDeleteTemplateButtonClick'
     },
 
     render: function() {
@@ -17,19 +17,16 @@ Tds.Views.TdsList = Backbone.View.extend({
         return this;
     },
 
-    afterRender: function() {
-        this.filterView = new Tds.Views.TdsListFilters({
-            tdsListView : this
-        });
-        this.$el
-            .find('#tds-list-filter-container')
-            .html((this.filterView).render().$el);
+    afterRender : function(){
+        this.fillTable();
+
+        return this;
     },
 
     fillTable: function(collection) {
         var me = this;
 
-        this.$('#tds-list-table').jsGrid({
+        this.$('#template-list').jsGrid({
             width: "100%",
 
             sorting: true,
@@ -41,9 +38,11 @@ Tds.Views.TdsList = Backbone.View.extend({
                     var d = $.Deferred();
 
                     $.ajax({
-                        url: "/tds",
+                        url: "/template",
                         data : {
-                            filter : me.getFilters()
+                            filter : {
+                                'isTemplate' : 1
+                            }
                         },
                         dataType: "json"
                     }).done(function(response) {
@@ -91,20 +90,30 @@ Tds.Views.TdsList = Backbone.View.extend({
         return this;
     },
 
-    fillFilterView : function(){
-        this.filterView.fillHtml();
+    onCreateTemplateButtonClick : function(){
+        var router = new Tds.Router();
 
-        return this;
+        router.navigate('/template/create', { trigger : true });
     },
 
-    setFilters : function(filters){
-        this.filters = filters;
+    onEditTemplateButtonClick : function(ev){
+        var me = this,
+            router = new Tds.Router(),
+            templateId = $(ev.currentTarget).data('template-id');
 
-        return this;
+        router.navigate('/template/edit/' + templateId, { trigger : true });
     },
 
-    getFilters : function(){
-        return this.filters;
+    onDeleteTemplateButtonClick : function(ev){
+        var me = this,
+            templateId = $(ev.currentTarget).data('template-id');
+            templateModel = new Tds.Models.Tds({id: templateId});
+
+        templateModel.destroy({
+            url: 'template/' + templateId,
+            success: function(model, response) {
+                me.$('#template-list').jsGrid('loadData');
+            }
+        });
     }
-
 });

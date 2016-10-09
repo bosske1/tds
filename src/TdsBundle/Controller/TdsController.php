@@ -32,7 +32,8 @@ class TdsController extends Controller
             ->setDtCreated(new \DateTime())
             ->setData($request->get('data'))
             ->setModifiedByUser($user)
-            ->setDtModified(new \DateTime());
+            ->setDtModified(new \DateTime())
+            ->setIsTemplate($request->get('isTemplate'));
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($tds);
@@ -68,7 +69,8 @@ class TdsController extends Controller
         /** @var Tds $tds */
         $tds->setData($request->get('data'))
             ->setModifiedByUser($user)
-            ->setDtModified(new \DateTime());
+            ->setDtModified(new \DateTime())
+            ->setIsTemplate($request->get('isTemplate'));
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($tds);
@@ -100,8 +102,9 @@ class TdsController extends Controller
         }
 
         return $this->json(array(
-            'id'   => $id,
-            'data' => json_decode($tds->getData(), true)
+            'id'           => $id,
+            'isTemplate'   => $tds->getIsTemplate(),
+            'data'         => json_decode($tds->getData(), true)
         ));
     }
 
@@ -151,9 +154,7 @@ class TdsController extends Controller
 
         $responseData = [];
 
-        $tdsList = $this->get('doctrine')
-            ->getRepository('TdsBundle:Tds')
-            ->findByFilters($request->get('filter'));
+        $tdsList = $this->get('tds.searchingService')->findByFilters();
 
         /** @var Tds $tds */
         foreach($tdsList as $tds) {
