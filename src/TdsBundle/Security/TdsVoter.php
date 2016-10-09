@@ -10,13 +10,14 @@ use TdsBundle\Repository\TdsRepository;
 
 class TdsVoter extends Voter
 {
-    const READ = 'read';
-    const EDIT = 'edit';
+    const READ   = 'read';
+    const EDIT   = 'edit';
+    const DELETE = 'delete';
 
     public function supports($attribute, $subject)
     {
         return $subject instanceof Tds && in_array($attribute, array(
-            self::READ, self::EDIT
+            self::READ, self::EDIT, self::DELETE
         ));
     }
 
@@ -40,7 +41,7 @@ class TdsVoter extends Voter
         }
 
         // i'm not so sure about this, i should read docs...
-        if($attribute === self::EDIT && $user->getId() != $tds->getCreatedBy()){
+        if( ( $attribute === self::EDIT || $attribute === self::DELETE ) && $user->getId() != $tds->getCreatedBy()){
             return false;
         }
 

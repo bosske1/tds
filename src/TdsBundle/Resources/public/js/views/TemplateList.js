@@ -104,7 +104,16 @@ Tds.Views.TemplateList = Backbone.View.extend({
         router.navigate('/template/edit/' + templateId, { trigger : true });
     },
 
-    onDeleteTemplateButtonClick : function(){
-        alert('delete')
+    onDeleteTemplateButtonClick : function(ev){
+        var me = this,
+            templateId = $(ev.currentTarget).data('template-id');
+            templateModel = new Tds.Models.Tds({id: templateId});
+
+        templateModel.destroy({
+            url: 'template/' + templateId,
+            success: function(model, response) {
+                me.$('#template-list').jsGrid('loadData');
+            }
+        });
     }
 });

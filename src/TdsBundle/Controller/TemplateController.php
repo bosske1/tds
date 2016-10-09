@@ -38,6 +38,32 @@ class TemplateController extends Controller
     }
 
     /**
+     * Matches /template/*
+     *
+     * @Route("/template/{id}", name="template_get")
+     * @Method("DELETE")
+     */
+    public function deleteAction($id)
+    {
+        /** @var Tds $tds */
+        $tds = $this->get('doctrine')
+            ->getRepository('TdsBundle:Tds')
+            ->find((int)$id);
+
+        if(!$this->isGranted(TdsVoter::DELETE, $tds)){
+            throw new \Exception('You cannot read this TDS!');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($tds);
+        $em->flush();
+
+        return $this->json(array(
+            'success'      => true
+        ));
+    }
+
+    /**
      * Matches /template
      *
      * @Route("/template", name="template_list")
