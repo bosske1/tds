@@ -1,4 +1,4 @@
-Tds.Models.Language = Backbone.Model.extend({
+Tds.Models.Lang = Backbone.Model.extend({
 
     url: '/lang',
 

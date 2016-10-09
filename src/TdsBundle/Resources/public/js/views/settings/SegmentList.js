@@ -76,8 +76,11 @@ Tds.Views.SegmentList = Backbone.View.extend({
                 {
                     title: 'Created by',
                     name: "createdBy",
-                    type: "number",
-                    width: 50
+                    type: "text",
+                    width: 150,
+                    cellRenderer: function(value, item) {
+                        return '<td class="jsgrid-cell" style="width: 150px;">' + item.createdByUser.firstName + ' ' + item.createdByUser.lastName + '</td>';
+                    }
                 },
                 {
                     title: 'Created',
