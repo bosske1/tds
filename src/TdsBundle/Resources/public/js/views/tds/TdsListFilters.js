@@ -63,6 +63,18 @@ Tds.Views.TdsListFilters = Backbone.View.extend({
         filters['isTemplate'] = 0;
 
         return filters;
+    },
+
+    fillHtml : function(){
+        var filterModel = this.tdsListView.filterModel;
+
+        $('#filter_name').val(filterModel.get('name'));
+
+        $.each(filterModel.get('data'), function(filterKey, filterValue){
+            $('#' + filterKey).val(filterValue);
+        });
+
+        return this;
     }
 
 });

@@ -19,10 +19,11 @@ Tds.Router = Backbone.Router.extend({
         'templates'     : 'templateList',
         'translate'     : 'translate',
 
-        'tds/list'       : 'tdsList',
         'tds/create'     : 'tdsCreate',
         'tds/edit/:id'   : 'tdsEdit',
+
         'tds/filter/add' : 'tdsFilterAdd',
+        'tds/filter/:id' : 'tdsFilter',
 
         'template/create'   : 'templateCreate',
         'template/edit/:id' : 'templateEdit'
@@ -38,12 +39,6 @@ Tds.Router = Backbone.Router.extend({
         var dashboardView = new Tds.Views.Dashboard();
 
         $('#main-container').html(dashboardView.render().$el);
-    },
-
-    tdsList: function() {
-        var tdsListView = new Tds.Views.TdsList();
-
-        Tds.renderView(tdsListView);
     },
 
     tdsCreate: function() {
@@ -193,5 +188,27 @@ Tds.Router = Backbone.Router.extend({
         var tdsListView = new Tds.Views.TdsList();
 
         Tds.renderView(tdsListView);
+    },
+
+    tdsFilter: function(id) {
+        var me = this,
+            tdsFilterModel = new Tds.Models.Filter();
+
+        tdsFilterModel.fetch({
+            url: '/filter/' + id,
+            success: function (filterModel, response, options) {
+                var tdsListView  = new Tds.Views.TdsList({ filterModel : filterModel });
+
+                tdsListView.setFilters(filterModel.get('data'));
+                Tds.renderView(tdsListView);
+
+                tdsListView.fillFilterView(filterModel)
+                           .fillTable();
+            },
+            error: function (collection, response, options) {
+
+                //create error handler...
+            }
+        });
     }
 });

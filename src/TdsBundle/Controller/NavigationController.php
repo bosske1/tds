@@ -108,14 +108,14 @@ class NavigationController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $filterList = $this->get('doctrine')
-            ->getRepository('TdsBundle:Tds')
+            ->getRepository('TdsBundle:Filter')
             ->findBy(array('createdBy' => $user->getId()));
 
         /** @var Filter $filter */
         foreach($filterList as $filter){
             $filterData[] = array(
                 'label'   => $filter->getName(),
-                'link'    => 'filter/' . $filter->getId(),
+                'link'    => 'tds/filter/' . $filter->getId(),
                 'visible' => true
             );
         }

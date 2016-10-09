@@ -46,6 +46,26 @@ class FilterController extends Controller
     /**
      * Matches /filter/*
      *
+     * @Route("/filter/{id}", name="filter_get")
+     * @Method("GET")
+     */
+    public function readAction($id)
+    {
+        /** @var Filter $filter */
+        $filter = $this->get('doctrine')
+            ->getRepository('TdsBundle:Filter')
+            ->find((int)$id);
+
+        return $this->json(array(
+            'id'           => $id,
+            'name'         => $filter->getName(),
+            'data'         => json_decode($filter->getData(), true)
+        ));
+    }
+
+    /**
+     * Matches /filter/*
+     *
      * @Route("/filter/{id}", name="filter_update")
      * @Method("PUT")
      */

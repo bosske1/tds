@@ -2,7 +2,11 @@ Tds.Views.TdsList = Backbone.View.extend({
 
     filters : {},
 
-    initialize: function() {
+    filterModel : null,
+    filterView  : null,
+
+    initialize: function(options) {
+        this.filterModel = options.filterModel;
         this.template= _.template($('#tpl-tds-list').html());
     },
 
@@ -14,13 +18,12 @@ Tds.Views.TdsList = Backbone.View.extend({
     },
 
     afterRender: function() {
-
-        var tdsListFilters = new Tds.Views.TdsListFilters({
+        this.filterView = new Tds.Views.TdsListFilters({
             tdsListView : this
         });
         this.$el
             .find('#tds-list-filter-container')
-            .html((tdsListFilters).render().$el);
+            .html((this.filterView).render().$el);
     },
 
     fillTable: function(collection) {
@@ -84,6 +87,12 @@ Tds.Views.TdsList = Backbone.View.extend({
                 }
             ]
         });
+
+        return this;
+    },
+
+    fillFilterView : function(){
+        this.filterView.fillHtml();
 
         return this;
     },
