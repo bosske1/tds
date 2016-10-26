@@ -17,7 +17,8 @@ Tds.Views.Tds = Backbone.View.extend({
         'click #add-widget-button'              : 'addWidget',
         'click #add-half-widget-button'         : 'addHalfWidget',
         'mousedown .grid-stack-item-content'    : 'removeWidget', //middle mouse click
-        'dblclick .grid-stack-item-content'     : 'showEditorModal'
+        'dblclick .grid-stack-item-content'     : 'showEditorModal',
+        'click .grid-stack-item-content'        : 'showActionButtons'
     },
 
     initialize: function() {
@@ -183,6 +184,36 @@ Tds.Views.Tds = Backbone.View.extend({
 
     getGridStackContainer : function(){
         return $('.grid-stack')
-    }
+    },
 
+    showActionButtons: function(e) {
+        var me = this;
+        var grid = this.getGridStackContainer().data('gridstack');
+
+        if($('.grid-stack-item-content-selected')[0] == e.currentTarget) {
+            $('.grid-stack-item-content-selected').removeClass('grid-stack-item-content-selected');
+            $('#edit-widget-button').hide();
+            $('#remove-widget-button').hide();
+        } else {
+            $('.grid-stack-item-content-selected').removeClass('grid-stack-item-content-selected');
+            $(e.currentTarget).addClass('grid-stack-item-content-selected');
+
+            $( "#edit-widget-button" ).unbind().on('click', function() {
+                $('#editor-modal').modal('show');
+
+                me.showEditor(e);
+                me.onEditorSave(e);
+            });
+
+            $( "#remove-widget-button" ).unbind().on('click', function() {
+                grid.removeWidget($(e.currentTarget).parent());
+
+                $('#edit-widget-button').hide();
+                $('#remove-widget-button').hide();
+            });
+
+            $('#edit-widget-button').show();
+            $('#remove-widget-button').show();
+        }
+    }
 });

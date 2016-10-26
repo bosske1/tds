@@ -1,0 +1,6 @@
+/* Define here Styles */
+
+.grid-stack-item-content-selected {
+    border: 2px solid #0efffa;
+    border-radius: 5px;
+}
